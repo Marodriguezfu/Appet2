@@ -7,8 +7,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="SplashTheme" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/splashscreen</item>
+    <style name="SplashTheme" parent="AppTheme"> <!---Definimos un nuevo estilo para el splashScreen-->
+        <item name="android:windowBackground">@drawable/splashscreen</item> <!---Llamamos el background creado en el drawable-->
     </style>
 
 </resources>

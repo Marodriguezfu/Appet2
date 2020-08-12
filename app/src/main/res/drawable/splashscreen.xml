@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable = "@color/common_google_signin_btn_text_dark"/>
+    <item android:drawable = "@color/common_google_signin_btn_text_dark"/> <!---Definimos el color de fondo de la SplashScreen-->
     <item>
         <bitmap android:src="@mipmap/logo_final"
-            android:gravity="center"/>
+            android:gravity="center"/> <!---Definimos el logo como la imagen de espera, y la ubicamos en el centro de la pantalla-->
     </item>
 </layer-list>
