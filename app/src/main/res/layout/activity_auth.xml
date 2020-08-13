@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FAFAFA"
-    tools:context=".MainActivity">
+    tools:context=".AuthActivity">
 
     //imagen logo
 
@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.121"
-        app:srcCompat="@drawable/logo_login" />
+        app:srcCompat="@drawable/logo_final" />
 
     //usuario o correo
 
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:backgroundTint="#2196F3"
+        android:backgroundTint="@color/colorPrimary"
         android:ems="10"
         android:hint="Username or Email"
         android:inputType="textPersonName"
@@ -38,10 +38,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     //contraseña
-
-
-    //boton de inicio
 
     <EditText
         android:id="@+id/password_login"
@@ -49,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:backgroundTint="#2196F3"
+        android:backgroundTint="@color/colorPrimary"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPersonName"
@@ -60,8 +58,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.575" />
 
+
+    //boton de inicio
+
     <Button
-        android:id="@+id/Sign_in"
+        android:id="@+id/log_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_rounded"
@@ -91,7 +92,7 @@
     //boton de registro
 
     <Button
-        android:id="@+id/register"
+        android:id="@+id/sign_in_button"
         android:layout_width="264dp"
         android:layout_height="39dp"
         android:text="You don`t have an account yet?"

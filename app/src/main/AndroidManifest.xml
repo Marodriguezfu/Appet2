@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".MainActivity"
-            android:theme="@style/SplashTheme"> <!---Se hace utilizar el tema creado-->
+        <activity android:name=".HomeActivity"></activity>
+        <activity
+            android:name=".AuthActivity"
+            android:theme="@style/SplashTheme"> <!-- -Se hace utilizar el tema creado -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
