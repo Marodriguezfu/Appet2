@@ -15,7 +15,6 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         //Setup
-
         val bundle = intent.extras //RECUPERAR LOS PARAMETROS
         val email =  bundle?.getString("email")
         val provider = bundle?.getString("provider")
