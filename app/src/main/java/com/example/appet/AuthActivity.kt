@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat.startActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_auth.*
 
@@ -31,34 +32,39 @@ class AuthActivity : AppCompatActivity() {
                     if (it.isSuccessful) {
                         showHome(it.result?.user?.email ?: "", ProviderType.BASIC) // PASAR A LA NUEVA PANTALLA,los signos de interrogación son porque el email puede o no existir( Por lo que estas son condiciones por si no existe envíe un string vacío
                     } else {
-                        showAlert()
+                        showAlert()//El usuario ya esta registrado
                     }
                 }
+            }else {
+                showAlert() //Si estan vacios los campos
             }
         }
 
         //ENTRAR CON UN USUARIO REGISTRADO
         log_in_button.setOnClickListener {
             if (user_login.text.isNotEmpty() && password_login.text.isNotEmpty()) {
-                FirebaseAuth.getInstance().signInWithEmailAndPassword(sign_in_button.text.toString(),password_login.text.toString()).addOnCompleteListener {
+                FirebaseAuth.getInstance().signInWithEmailAndPassword(user_login.text.toString(),password_login.text.toString()).addOnCompleteListener {
                     if (it.isSuccessful) {
                         showHome(it.result?.user?.email ?: "", ProviderType.BASIC) //los signos de interrogación son porque el email puede o no existir( Por lo que estas son condiciones por si no existe envíe un string vacío
-                    } else {
+                    }else {
                         showAlert() //SI NO SE REGISTRA CREA UNA ALERTA
                     }
                 }
+            }else {
+                showAlert() //Si estan vacios los campos
+            }
             }
         }
 
 
-    }
+
     //FUNCION QUE PRODUCE UNA ALERTA SI ALGO ESTA MAL
-    private fun showAlert() {
+    private fun showAlert(){
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
         builder.setMessage("Se ha producido un error autenticando al usuario")
-        builder.setPositiveButton("Aceptar", null)
+        builder.setPositiveButton("Aceptar",null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
@@ -74,4 +80,3 @@ class AuthActivity : AppCompatActivity() {
         startActivity(homeIntent) //LA NAVEGACION A LA NUEVA PANTALLA
     }
 }
-

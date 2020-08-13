@@ -16,8 +16,10 @@ class HomeActivity : AppCompatActivity() {
 
         //Setup
         val bundle = intent.extras //RECUPERAR LOS PARAMETROS
-        val email =  bundle?.getString("email")
-        val provider = bundle?.getString("provider")
+        val email =  bundle?.getString("email")//Se accede al map en donde se almacenan los datos
+        val provider = bundle?.getString("provider")//Se accede al map en donde se almacenan los datos
+
+        //Se llama la funcion setup, con los parametros recien recuperados
         setup(email ?: "", provider ?: "")
     }
 

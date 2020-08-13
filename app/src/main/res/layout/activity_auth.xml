@@ -22,6 +22,8 @@
 
     //usuario o correo
 
+
+
     <EditText
         android:id="@+id/user_login"
         android:layout_width="match_parent"
@@ -31,10 +33,10 @@
         android:backgroundTint="@color/colorPrimary"
         android:ems="10"
         android:hint="Username or Email"
-        android:inputType="textPersonName"
+        android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,10 +52,10 @@
         android:backgroundTint="@color/colorPrimary"
         android:ems="10"
         android:hint="Password"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.575" />
@@ -61,20 +63,21 @@
 
     //boton de inicio
 
+
+    //boton de inicio por Google
+
     <Button
         android:id="@+id/log_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_rounded"
-        android:text="Sign in"
+        android:text="Log in"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.66" />
-
-    //boton de inicio por Google
+        app:layout_constraintVertical_bias="0.658" />
 
     <ImageButton
         android:id="@+id/button_google"
@@ -95,8 +98,8 @@
         android:id="@+id/sign_in_button"
         android:layout_width="264dp"
         android:layout_height="39dp"
-        android:text="You don`t have an account yet?"
         android:background="@drawable/button_rounded"
+        android:text="You don`t have an account yet?"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
