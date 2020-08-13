@@ -37,19 +37,34 @@ class AuthActivity : AppCompatActivity() {
                     if (it.isSuccessful) {
                         showHome(it.result?.user?.email ?: "", ProviderType.BASIC) // PASAR A LA NUEVA PANTALLA,los signos de interrogación son porque el email puede o no existir( Por lo que estas son condiciones por si no existe envíe un string vacío
                     } else {
-                        showAlert()//El usuario ya esta registrado
+                        showAlert2()//El usuario ya esta registrado
                     }
                 }
             }else {
-                showAlert() //Si estan vacios los campos
+                showAlert1() //Si estan vacios los campos
             }
         }
     }
-    private fun showAlert(){
+
+    //FUNCIONES QUE PRODUCEN UNA ALERTA SI ALGO ESTA MAL
+
+    //La funcion showAlert1 mostrara un mensaje que le diga al usuario que no introdujo parte de la informacion (usuario, contraseña, nombre, telefono, o mas de uno)
+    private fun showAlert1(){
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
-        builder.setMessage("Se ha producido un error autenticando al usuario")
+        builder.setMessage("Existen campos vacios necesarios para registrar su cuenta en Appet")
+        builder.setPositiveButton("Aceptar",null)
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    //La funcion showAlert2 mostrara un mensaje que le indica al usuario que no se encuentra registrado en la aplicacion, o ha cometido un error al digitar sus credenciales
+    private fun showAlert2(){
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Error")
+        builder.setMessage("Usted ya se encuentra registrado en Appet o ha cometido un error a la hora de digitar sus datos en el proceso de registro")
         builder.setPositiveButton("Aceptar",null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
