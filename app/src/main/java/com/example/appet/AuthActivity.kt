@@ -4,13 +4,19 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_auth.*
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_login.password_login
 import kotlinx.android.synthetic.main.activity_login.user_login
 
 class AuthActivity : AppCompatActivity() {
+
+    private val  GOOGLE_SIGN_IN = 100
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -30,7 +36,7 @@ class AuthActivity : AppCompatActivity() {
     private fun setup() {
         title = "Autenticación"
 
-        //CREAR UN USUARIO
+        //REGISTRO DE USUARIO CON CORREO Y CONTRASEÑA
         sign_up_button.setOnClickListener {//RECOGER EL EVENTO CUANDO SE EJECUTE
             if (user_login.text.isNotEmpty() && password_login.text.isNotEmpty() && nombre_registro.text.isNotEmpty() && telefono_registro.text.isNotEmpty()) { //COMPROBAR QUE NO SON VACÍAS
                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(user_login.text.toString(), password_login.text.toString()).addOnCompleteListener {//REGISTRO DE USUARIO Y CONTRASEÑA EN FIREBASE
@@ -43,6 +49,21 @@ class AuthActivity : AppCompatActivity() {
             }else {
                 showAlert1() //Si estan vacios los campos
             }
+        }
+        //REGISTRO DE USUARIO CON GOOGLE
+        button_google_auth.setOnClickListener {
+            //Configuracion
+
+            val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
+
+            val googleClient = GoogleSignIn.getClient(this, googleConf)
+            googleClient.signOut()
+
+            startActivityForResult(googleClient.signInIntent, GOOGLE_SIGN_IN )
+
+
+
+
         }
     }
 
@@ -79,6 +100,35 @@ class AuthActivity : AppCompatActivity() {
         }
         startActivity(homeIntent) //LA NAVEGACION A LA NUEVA PANTALLA
         finish()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == GOOGLE_SIGN_IN) {
+
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)
+
+                if(account != null) {
+                    val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+
+                    FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            showHome(account.email ?: "", ProviderType.GOOGLE) // PASAR A LA NUEVA PANTALLA,los signos de interrogación son porque el email puede o no existir( Por lo que estas son condiciones por si no existe envíe un string vacío
+                        } else {
+                            showAlert2()//El usuario ya esta registrado
+                        }
+                    }
+                }
+
+            } catch (e: ApiException) {
+                showAlert2()
+            }
+
+
+        }
     }
 
 

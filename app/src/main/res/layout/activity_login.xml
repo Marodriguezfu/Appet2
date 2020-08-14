@@ -79,7 +79,7 @@
             android:layout_height="15dp" />
 
         <ImageButton
-            android:id="@+id/button_google"
+            android:id="@+id/button_google_auth"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="100dp"
