@@ -107,7 +107,7 @@ class LoginActivity : AppCompatActivity() {
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
-        builder.setMessage("Usted no se encuentra registrado en Appet o ha cometido un error a la hora de iniciar sesión")
+        builder.setMessage("Usted no se encuentra registrado en Miauff o ha cometido un error a la hora de iniciar sesión")
         builder.setPositiveButton("Aceptar",null)
         val dialog: AlertDialog = builder.create()
         dialog.show()

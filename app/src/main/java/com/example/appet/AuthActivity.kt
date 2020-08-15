@@ -9,6 +9,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_auth.*
 import kotlinx.android.synthetic.main.activity_login.password_login
 import kotlinx.android.synthetic.main.activity_login.user_login
@@ -25,10 +26,23 @@ class AuthActivity : AppCompatActivity() {
         //setup
         setup()
 
+        //Se llama la funcion notification, para acceder al ID del dispositivo en el que se accedio
+        //notification()
+
         ir_a_login_button.setOnClickListener {
             val loginIntent = Intent(this, LoginActivity::class.java)
             startActivity(loginIntent)
 
+        }
+    }
+
+    //Funcion para obtener el ID de un dispositivo, util para enviar notificaciones personalizadas
+    private fun notification() {
+
+        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener {
+            it.result?.token?.let {
+                println("Este es el token del dispositivo: ${it}") //Esta linea es para imprimir el token del dispositivo; se debe enviar a una base de datos para que se pueda acceder a estos a la hora de necesitarse enviar una notificacion a un usuario determinado
+            }
         }
     }
 
@@ -71,7 +85,7 @@ class AuthActivity : AppCompatActivity() {
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
-        builder.setMessage("Existen campos vacios necesarios para registrar su cuenta en Appet")
+        builder.setMessage("Existen campos vacios necesarios para registrar su cuenta en Miauff")
         builder.setPositiveButton("Aceptar",null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
@@ -82,7 +96,7 @@ class AuthActivity : AppCompatActivity() {
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
-        builder.setMessage("Usted ya se encuentra registrado en Appet o ha cometido un error a la hora de digitar sus datos en el proceso de registro")
+        builder.setMessage("Usted ya se encuentra registrado en Miauff o ha cometido un error a la hora de digitar sus datos en el proceso de registro")
         builder.setPositiveButton("Aceptar",null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
@@ -127,7 +141,6 @@ class AuthActivity : AppCompatActivity() {
 
         }
     }
-
 
 
 }
