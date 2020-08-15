@@ -20,6 +20,9 @@ class AuthActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
+        //Error para activar
+        //throw RuntimeException("Forzado de error")
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
 
