@@ -9,16 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-
-        <!-- Se definen el logo de las notificaciones push -->
+        <activity android:name=".Registro2Activity"></activity>
+        <activity android:name=".Registro1Activity" /> <!-- Se definen el logo de las notificaciones push -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/logo_miauff_sin_texto" />
-        <!-- Se define el color de la notificación -->
+            android:resource="@drawable/logo_miauff_sin_texto" /> <!-- Se define el color de la notificación -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
-        <activity android:name=".AuthActivity"></activity>
+
+        <activity android:name=".AuthActivity" />
         <activity android:name=".HomeActivity" />
         <activity
             android:name=".LoginActivity"
@@ -28,9 +28,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!---Bloque de codigo para poder ejecutar notificaciones push en segundo plano-->
+        </activity> <!-- -Bloque de codigo para poder ejecutar notificaciones push en segundo plano -->
         <service
             android:name=".MyFirebaseMessagingService"
             android:exported="false">
@@ -38,8 +36,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-
     </application>
 
 </manifest>
