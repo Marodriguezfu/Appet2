@@ -1,9 +1,9 @@
 package com.example.appet
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -55,18 +55,24 @@ class AuthActivity : AppCompatActivity() {
 
         //REGISTRO DE USUARIO CON CORREO Y CONTRASEÑA
         sign_up_button.setOnClickListener {//RECOGER EL EVENTO CUANDO SE EJECUTE
-            if (user_login.text.isNotEmpty() && password_login.text.isNotEmpty() && nombre_registro.text.isNotEmpty() && telefono_registro.text.isNotEmpty()) { //COMPROBAR QUE NO SON VACÍAS
-                FirebaseAuth.getInstance().createUserWithEmailAndPassword(user_login.text.toString(), password_login.text.toString()).addOnCompleteListener {//REGISTRO DE USUARIO Y CONTRASEÑA EN FIREBASE
-                    if (it.isSuccessful) {
-                        //showHome(it.result?.user?.email ?: "", ProviderType.BASIC) // PASAR A LA NUEVA PANTALLA,los signos de interrogación son porque el email puede o no existir( Por lo que estas son condiciones por si no existe envíe un string vacío
-                        val registro1Intent = Intent(this, Registro1Activity::class.java)
-                        startActivity(registro1Intent)
-                    } else {
-                        showAlert2()//El usuario ya esta registrado
+            if (user_login.text.isNotEmpty() && password_login.text.isNotEmpty() && confirmPassword.text.isNotEmpty() && nombre_registro.text.isNotEmpty() && telefono_registro.text.isNotEmpty()) { //COMPROBAR QUE NO SON VACÍAS
+                if(password_login.text.toString().equals(confirmPassword.text.toString())){ //Se debe comparar si el usuario ingreso la misma contraseña, o si cometio un error al digitar
+                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(
+                        user_login.text.toString(),
+                        password_login.text.toString()
+                    ).addOnCompleteListener {//REGISTRO DE USUARIO Y CONTRASEÑA EN FIREBASE
+                        if (it.isSuccessful) {
+                            //showHome(it.result?.user?.email ?: "", ProviderType.BASIC) // PASAR A LA NUEVA PANTALLA,los signos de interrogación son porque el email puede o no existir( Por lo que estas son condiciones por si no existe envíe un string vacío
+                            val registro1Intent = Intent(this, Registro1Activity::class.java)
+                            startActivity(registro1Intent)
+                        } else {
+                            showAlert(2) //El usuario ya esta registrado
+                        }
                     }
-                }
-            }else {
-                showAlert1() //Si estan vacios los campos
+                }else{
+                    showAlert(3) //El usuario cometio un error digitando la contraseña
+            }}else {
+                showAlert(1)  //Si estan vacios los campos
             }
         }
 
@@ -75,34 +81,34 @@ class AuthActivity : AppCompatActivity() {
         button_google_auth.setOnClickListener {
 
             //Configuracion
-            val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
+            val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(
+                getString(
+                    R.string.default_web_client_id
+                )
+            ).requestEmail().build()
             val googleClient = GoogleSignIn.getClient(this, googleConf)
             googleClient.signOut()
-            startActivityForResult(googleClient.signInIntent, GOOGLE_SIGN_IN )
+            startActivityForResult(googleClient.signInIntent, GOOGLE_SIGN_IN)
 
         }
     }
 
     //FUNCIONES QUE PRODUCEN UNA ALERTA SI ALGO ESTA MAL
 
-    //La funcion showAlert1 mostrara un mensaje que le diga al usuario que no introdujo parte de la informacion (usuario, contraseña, nombre, telefono, o mas de uno)
-    private fun showAlert1(){
+    private fun showAlert(caso: Int){
+
+        var mensaje: String;
+        when (caso) {
+            1 -> mensaje = "Existen campos vacios necesarios para registrar su cuenta en Miauff"
+            2 -> mensaje = "Usted ya se encuentra registrado en Miauff o ha cometido un error a la hora de digitar sus datos en el proceso de registro"
+            3 -> mensaje = "Las contraseñas no coinciden, intente nuevamente"
+            else -> mensaje = "Ocurrio un Error inesperado"
+        }
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
-        builder.setMessage("Existen campos vacios necesarios para registrar su cuenta en Miauff")
-        builder.setPositiveButton("Aceptar",null)
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
-    }
-
-    //La funcion showAlert2 mostrara un mensaje que le indica al usuario que no se encuentra registrado en la aplicacion, o ha cometido un error al digitar sus credenciales
-    private fun showAlert2(){
-
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Error")
-        builder.setMessage("Usted ya se encuentra registrado en Miauff o ha cometido un error a la hora de digitar sus datos en el proceso de registro")
-        builder.setPositiveButton("Aceptar",null)
+        builder.setMessage(mensaje)
+        builder.setPositiveButton("Aceptar", null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
@@ -134,18 +140,14 @@ class AuthActivity : AppCompatActivity() {
                         if (it.isSuccessful) {
                             showHome(account.email ?: "", ProviderType.GOOGLE) // PASAR A LA NUEVA PANTALLA,los signos de interrogación son porque el email puede o no existir( Por lo que estas son condiciones por si no existe envíe un string vacío
                         } else {
-                            showAlert2()//El usuario ya esta registrado
+                            showAlert(2)//El usuario ya esta registrado
                         }
                     }
                 }
 
             } catch (e: ApiException) {
-                showAlert2()
+                showAlert(2)//El usuario ya esta registrado
             }
-
-
         }
     }
-
-
 }
