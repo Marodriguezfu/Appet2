@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FAFAFA"
     tools:context=".Registro1Activity">
 
     <TextView
@@ -13,6 +14,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:text="Donde se encuentran tus peludos"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,6 +26,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:text="País: "
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInicial" />
@@ -34,9 +37,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:text="Colombia"
-        android:textSize="18sp"
         android:backgroundTint="#9C9C9C"
+        android:text="Colombia"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/paisText" />
 
@@ -47,19 +51,23 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:text="Departamento:"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/paisSelected" />
 
     <Button
         android:id="@+id/buttonNext"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
+        android:background="@color/colorAccent"
         android:text="Next"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Spinner
         android:id="@+id/spinnerDepto"
@@ -67,6 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
+        android:textColor="@color/colorPrimaryDark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/deptoTExt" />
 
@@ -85,6 +94,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
+        android:textColor="@color/colorPrimaryDark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ciudadMunicipioText" />
 
@@ -94,10 +104,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="40dp"
-        android:textSize="18sp"
         android:text="Ciudad/Municipio"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerDepto"
-         />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerDepto" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
