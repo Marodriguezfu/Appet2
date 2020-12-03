@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_registro1.*
 
 
 class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListener{
+
+    private val db = FirebaseFirestore.getInstance()
 
     private var spinner: Spinner? = null //creamos una variable para el Spinner
     private var arrayAdapter:ArrayAdapter<String> ? = null //Creamos un ArrayAdapter, se utiliza a la hora de pasar el arreglo al Spinner
@@ -44,7 +47,13 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
 
             //Llamamos la actividad Registro 2
             //showRegistro2(departamento)
+            db.collection("users").document(email ?: "").set(
+                hashMapOf("provider" to "BASIC",
+                    "departamento" to departamento,
+                    "municipio" to ciudad
+                )
 
+            )
             showHome(email ?: "" , "BASIC")
             //val textooculto = findViewById(R.id.ciudadMunicipioText)
 

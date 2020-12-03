@@ -9,12 +9,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_auth.*
 import kotlinx.android.synthetic.main.activity_login.password_login
 import kotlinx.android.synthetic.main.activity_login.user_login
 
 class AuthActivity : AppCompatActivity() {
+
+    private val db = FirebaseFirestore.getInstance()
 
     private val  GOOGLE_SIGN_IN = 100
 
@@ -63,6 +66,12 @@ class AuthActivity : AppCompatActivity() {
                     ).addOnCompleteListener {//REGISTRO DE USUARIO Y CONTRASEÑA EN FIREBASE
                         if (it.isSuccessful) {
                             //showHome(it.result?.user?.email ?: "", ProviderType.BASIC) // PASAR A LA NUEVA PANTALLA,los signos de interrogación son porque el email puede o no existir( Por lo que estas son condiciones por si no existe envíe un string vacío
+                            db.collection("users").document(user_login.text.toString()).set(
+                                hashMapOf("name" to nombre_registro.text.toString(),
+                                    "phone" to telefono_registro.text.toString()
+                                )
+
+                            )
                             val registro1Intent = Intent(this, Registro1Activity::class.java)
                             showRegistro(it.result?.user?.email ?: "", ProviderType.BASIC)
                             //startActivity(registro1Intent)
