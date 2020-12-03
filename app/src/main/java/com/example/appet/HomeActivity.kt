@@ -1,6 +1,7 @@
 package com.example.appet
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.auth.FirebaseAuth
@@ -46,7 +47,14 @@ class HomeActivity : AppCompatActivity() {
             prefs.apply()
 
             FirebaseAuth.getInstance().signOut()
-            onBackPressed()//para volver a la pantalla anterior(EL INICIO DE SESION)
+            //onBackPressed()//para volver a la pantalla anterior(EL INICIO DE SESION)
+            finish()
+            val loginIntent = Intent(this, LoginActivity::class.java)
+            startActivity(loginIntent)
         }
+    }
+
+    override fun onBackPressed() {
+        //super.onBackPressed()
     }
 }
