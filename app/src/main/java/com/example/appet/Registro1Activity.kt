@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.*
 import kotlinx.android.synthetic.main.activity_registro1.*
 
+
 class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListener{
 
     private var spinner: Spinner? = null //creamos una variable para el Spinner
@@ -15,11 +16,18 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
     private lateinit var departamento: String //En esta variable se almacenara mas adelante, el departamento seleccionado por el usuario
     private lateinit var ciudad: String //Esta variable se utiliza para almacenar el valor de la ciudad seleccionada por el usuario
 
+
     private val itemList = arrayDep() //Creamos el Array de departamentos de Colombia y lo guardamos en la constante itemList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro1)
+
+        val bundle = intent.extras //RECUPERAR LOS PARAMETROS
+
+        var email  =  bundle?.getString("email")//Se accede al map en donde se almacenan los datos
+        var provider = bundle?.getString("provider")//Se accede al map en donde se almacenan los datos
+
         departamento = "Seleccionar Departamento";
         ciudad = "Seleccione"
         spinnerCiudadMunicipio.setVisibility(View.INVISIBLE)
@@ -30,21 +38,14 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
         spinner?.onItemSelectedListener = this //Se define el spinner
 
 
-/*
-        spinner = findViewById(R.id.spinnerCiudadMunicipio) //Accedemos al Spinner que hicimos en el archivo xml con la ayuda de su id
-        result = findViewById(R.id.resultText)//Esta linea debe ser eliminada, solo se utiliza para mostrar que si se esta seleccionando el departamento
-        arrayAdapter =ArrayAdapter(applicationContext , android.R.layout.simple_spinner_item , arrayCity("Cundinamarca")) //se llama el array que ya creamos y se adapta
-        spinner?.adapter = arrayAdapter //Se envia el array que ya hemos adatado al spinner
-        spinner?.onItemSelectedListener = this //Se define el spinner
-        */
-
-
 
 
         buttonNext.setOnClickListener {
 
             //Llamamos la actividad Registro 2
-            showRegistro2(departamento)
+            //showRegistro2(departamento)
+
+            showHome(email ?: "" , "BASIC")
             //val textooculto = findViewById(R.id.ciudadMunicipioText)
 
            /* TextView view = (TextView) findViewById(R.id.textView);
@@ -351,21 +352,15 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
     }
 
 
-
-
-
-    private fun showRegistro2(depto: String) {
+    private fun showHome(email: String, provider: String) {
         // IR A HOME
-      /* val registro2Intent = Intent(this, Registro2Activity::class.java).apply {    //CREAR UN INTENT A LA NUEVA PANTALLA Y NAVEGAR A LA NUEVA PANTALLA
+        val homeIntent = Intent(this, HomeActivity::class.java).apply {    //CREAR UN INTENT A LA NUEVA PANTALLA Y NAVEGAR A LA NUEVA PANTALLA
             //PARAMETROS A PASAR
-            putExtra("departamento", depto) //Pasamos el departamento a la siguiente aplicacion
+            putExtra("email", email) //PASARLE EL EMAIL A LA NUEVA PANTALLA
+            putExtra("provider", provider) //PASARLE EL PROVEEDOR A LA NUEVA PANTALLA
         }
-        startActivity(registro2Intent) //LA NAVEGACION A LA NUEVA PANTALLA
-
-       */
-
-        val homeIntent = Intent(this, HomeActivity::class.java)
-        startActivity(homeIntent)
+        startActivity(homeIntent) //LA NAVEGACION A LA NUEVA PANTALLA
+        finish()
     }
 
 }

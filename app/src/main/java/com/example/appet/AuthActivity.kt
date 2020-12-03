@@ -64,7 +64,8 @@ class AuthActivity : AppCompatActivity() {
                         if (it.isSuccessful) {
                             //showHome(it.result?.user?.email ?: "", ProviderType.BASIC) // PASAR A LA NUEVA PANTALLA,los signos de interrogación son porque el email puede o no existir( Por lo que estas son condiciones por si no existe envíe un string vacío
                             val registro1Intent = Intent(this, Registro1Activity::class.java)
-                            startActivity(registro1Intent)
+                            showRegistro(it.result?.user?.email ?: "", ProviderType.BASIC)
+                            //startActivity(registro1Intent)
                         } else {
                             showAlert(2) //El usuario ya esta registrado
                         }
@@ -113,14 +114,14 @@ class AuthActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun showHome(email: String, provider: ProviderType) {
+    private fun showRegistro(email: String, provider: ProviderType) {
         // IR A HOME
-        val homeIntent = Intent(this, HomeActivity::class.java).apply {    //CREAR UN INTENT A LA NUEVA PANTALLA Y NAVEGAR A LA NUEVA PANTALLA
+        val registro1Intent = Intent(this, Registro1Activity::class.java).apply {    //CREAR UN INTENT A LA NUEVA PANTALLA Y NAVEGAR A LA NUEVA PANTALLA
             //PARAMETROS A PASAR
             putExtra("email", email) //PASARLE EL EMAIL A LA NUEVA PANTALLA
             putExtra("provider", provider.name) //PASARLE EL PROVEEDOR A LA NUEVA PANTALLA
         }
-        startActivity(homeIntent) //LA NAVEGACION A LA NUEVA PANTALLA
+        startActivity(registro1Intent) //LA NAVEGACION A LA NUEVA PANTALLA
         finish()
     }
 
@@ -138,7 +139,7 @@ class AuthActivity : AppCompatActivity() {
 
                     FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
                         if (it.isSuccessful) {
-                            showHome(account.email ?: "", ProviderType.GOOGLE) // PASAR A LA NUEVA PANTALLA,los signos de interrogación son porque el email puede o no existir( Por lo que estas son condiciones por si no existe envíe un string vacío
+                            showRegistro(account.email ?: "", ProviderType.GOOGLE) // PASAR A LA NUEVA PANTALLA,los signos de interrogación son porque el email puede o no existir( Por lo que estas son condiciones por si no existe envíe un string vacío
                         } else {
                             showAlert(2)//El usuario ya esta registrado
                         }
