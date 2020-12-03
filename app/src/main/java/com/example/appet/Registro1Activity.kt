@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import kotlinx.android.synthetic.main.activity_registro1.*
 
 
@@ -47,12 +48,9 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
 
             //Llamamos la actividad Registro 2
             //showRegistro2(departamento)
+            val data = hashMapOf("provider" to "BASIC", "departamento" to departamento, "municipio" to ciudad )
             db.collection("users").document(email ?: "").set(
-                hashMapOf("provider" to "BASIC",
-                    "departamento" to departamento,
-                    "municipio" to ciudad
-                )
-
+               data , SetOptions.merge()
             )
             showHome(email ?: "" , "BASIC")
             //val textooculto = findViewById(R.id.ciudadMunicipioText)
