@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".Registro2Activity"></activity>
+        <activity android:name=".RegistroMascotaActivity"></activity>
+        <activity android:name=".Registro2Activity" />
         <activity android:name=".Registro1Activity" /> <!-- Se definen el logo de las notificaciones push -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
