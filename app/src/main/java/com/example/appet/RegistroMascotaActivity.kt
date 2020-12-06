@@ -1,5 +1,6 @@
 package com.example.appet
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -29,6 +30,12 @@ class RegistroMascotaActivity : AppCompatActivity(), AdapterView.OnItemSelectedL
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro_mascota)
+
+        val bundle = intent.extras //RECUPERAR LOS PARAMETROS
+        val email =  bundle?.getString("email")//Se accede al map en donde se almacenan los datos
+        val provider = bundle?.getString("provider")//Se accede al map en donde se almacenan los datos
+
+        var datos: Map<String, String>
         textSexo.visibility= View.INVISIBLE
         spinnerSexoMascota.visibility= View.INVISIBLE
         textRaza.visibility= View.INVISIBLE
@@ -50,6 +57,24 @@ class RegistroMascotaActivity : AppCompatActivity(), AdapterView.OnItemSelectedL
         spinner?.adapter = arrayAdapter //Se envia el array que ya hemos adatado al spinner
         spinner?.onItemSelectedListener = this //Se define el spinner
 
+        buttonNextMascota.setOnClickListener {
+            if(pesoMascota.text.isNotEmpty() && name_mascota.text.isNotEmpty()) {
+            pesoMascotaRegistro=pesoMascota.text.toString()
+
+            nombreMascotaRegistro = name_mascota.text.toString()
+                datos = mapOf("nombreMascota" to nombreMascotaRegistro,
+                    "tipoMascota" to tipoMascotaRegistro,
+                    "sexoMascota" to sexoMascotaRegistro,
+                    "razaMascota" to razaMascotaRegistro,
+                    "colorMascota" to colorPeloMascotaRegistro,
+                    "pesoMascota" to pesoMascotaRegistro
+                )
+                showVacunas(email ?: "", provider ?: "", datos)
+
+
+            }
+
+        }
 
     }
 
@@ -84,6 +109,8 @@ class RegistroMascotaActivity : AppCompatActivity(), AdapterView.OnItemSelectedL
                 textColorPelo.visibility = View.INVISIBLE
                 spinnerColorPelo.visibility = View.INVISIBLE
                 buttonNextMascota.visibility = View.INVISIBLE
+                pesoMascota.visibility = View.INVISIBLE
+                textPesoMascota.visibility = View.INVISIBLE
             }
         }
 
@@ -110,6 +137,8 @@ class RegistroMascotaActivity : AppCompatActivity(), AdapterView.OnItemSelectedL
                 buttonNextMascota.visibility = View.INVISIBLE
                 textColorPelo.visibility = View.INVISIBLE
                 spinnerColorPelo.visibility = View.INVISIBLE
+                pesoMascota.visibility = View.INVISIBLE
+                textPesoMascota.visibility = View.INVISIBLE
             }
 
 
@@ -134,6 +163,8 @@ class RegistroMascotaActivity : AppCompatActivity(), AdapterView.OnItemSelectedL
                 textColorPelo.visibility = View.INVISIBLE
                 spinnerColorPelo.visibility = View.INVISIBLE
                 buttonNextMascota.visibility = View.INVISIBLE
+                pesoMascota.visibility = View.INVISIBLE
+                textPesoMascota.visibility = View.INVISIBLE
             }
 
         } else if(parent==spinnerColorPelo) {
@@ -144,9 +175,13 @@ class RegistroMascotaActivity : AppCompatActivity(), AdapterView.OnItemSelectedL
                 textColorPelo.visibility = View.VISIBLE
                 spinnerColorPelo.visibility = View.VISIBLE
                 buttonNextMascota.visibility = View.VISIBLE
+                textPesoMascota.visibility = View.VISIBLE
+                pesoMascota.visibility = View.VISIBLE
             }
             else{
                 buttonNextMascota.visibility = View.INVISIBLE
+                pesoMascota.visibility = View.INVISIBLE
+                textPesoMascota.visibility = View.INVISIBLE
             }
 
         }
@@ -233,6 +268,24 @@ class RegistroMascotaActivity : AppCompatActivity(), AdapterView.OnItemSelectedL
         coloresAr.addAll(listOf("Seleccionar el color del pelo de la mascota","Amarillo","Blanco", "Blanco/Cafe", "Blanco/Gris", "Blanco/Naranja", "Blanco/Negro", "Cafe","Dorada",
             "Gris", "Naranja", "Negro", "Negro/Amarillo", "Negro/Dorado"))
         return coloresAr
+    }
+
+
+    private fun showVacunas(email: String, provider: String,datos: Map<String, String>) {
+        val vacunasIntent = Intent(this, RegistroVacunasActivity::class.java).apply {    //CREAR UN INTENT A LA NUEVA PANTALLA Y NAVEGAR A LA NUEVA PANTALLA
+            //PARAMETROS A PASAR
+            putExtra("email", email) //PASARLE EL EMAIL A LA NUEVA PANTALLA
+            putExtra("provider", provider) //PASARLE EL PROVEEDOR A LA NUEVA PANTALLA
+            putExtra("nombreMascota", datos["nombreMascota"])
+            putExtra("tipoMascota", datos["tipoMascota"])
+            putExtra("sexoMascota", datos["sexoMascota"])
+            putExtra("razaMascota", datos["razaMascota"])
+            putExtra("colorMascota", datos["colorMascota"])
+            putExtra("pesoMascota", datos["pesoMascota"])
+        }
+        startActivity(vacunasIntent) //LA NAVEGACION A LA NUEVA PANTALLA
+        finish()
+
     }
 
 

@@ -62,8 +62,8 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
             db.collection("users").document(email ?: "").set(
                data , SetOptions.merge()
             )
-            //showHome(email ?: "" , "BASIC")
-            showMascota()
+            showMascota(email ?: "" , "BASIC")
+            //showMascota()
             //val textooculto = findViewById(R.id.ciudadMunicipioText)
 
             //gatito.savePrincipalInfo()
@@ -368,23 +368,17 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
     }
 
 
-    private fun showHome(email: String, provider: String) {
+    private fun showMascota(email: String, provider: String) {
         // IR A HOME
-        val homeIntent = Intent(this, HomeActivity::class.java).apply {    //CREAR UN INTENT A LA NUEVA PANTALLA Y NAVEGAR A LA NUEVA PANTALLA
+        val registroMascotaIntent = Intent(this, RegistroMascotaActivity::class.java).apply {    //CREAR UN INTENT A LA NUEVA PANTALLA Y NAVEGAR A LA NUEVA PANTALLA
             //PARAMETROS A PASAR
             putExtra("email", email) //PASARLE EL EMAIL A LA NUEVA PANTALLA
             putExtra("provider", provider) //PASARLE EL PROVEEDOR A LA NUEVA PANTALLA
         }
-        startActivity(homeIntent) //LA NAVEGACION A LA NUEVA PANTALLA
+        startActivity(registroMascotaIntent) //LA NAVEGACION A LA NUEVA PANTALLA
         finish()
     }
 
-    private fun showMascota() {
-        // IR A HOME
-        val mascotaIntent = Intent(this, RegistroMascotaActivity::class.java)
-        startActivity(mascotaIntent) //LA NAVEGACION A LA NUEVA PANTALLA
-        //finish()
-    }
 
 
 }
