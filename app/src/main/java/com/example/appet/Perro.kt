@@ -3,6 +3,16 @@ package com.example.appet
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 
+/**
+ * Un perro de mascota.
+ *
+ * Esta clase hereda de la clase abstracta Mascota y permite organizar
+ * la información correspondiente a un perro, y almacenarla en Firebase.
+ *
+ * @property propietario el correo del propietario.
+ * @constructor Crea un perro con la información indispensable dentro
+ * de la app.
+ */
 class Perro(
     propietario: String,
     nombre: String,
@@ -24,7 +34,10 @@ class Perro(
     var rabia : Int = 0
     var rabiaFecha : String = " "
 
-
+    /**
+     * Envia los atributos de un obbjeto de la clase perro
+     * a una base de datos de Firebase.
+     */
     override fun saveInformation() {
         savePrincipalInfo("Perro")
         val db = FirebaseFirestore.getInstance()

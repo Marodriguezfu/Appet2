@@ -3,6 +3,7 @@ package com.example.appet
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 
+
 abstract class Mascota(propietario: String, nombre: String, sexo: String, raza: String, colorPelo: String, peso : Double, edad:Int) {
     var propietario : String = propietario
     var nombre : String = nombre
@@ -11,8 +12,13 @@ abstract class Mascota(propietario: String, nombre: String, sexo: String, raza: 
     var colorPelo : String = colorPelo
     var peso: Double = peso
     var edad : Int = edad
-    var tipo : String = ""
 
+    /**
+     * Guarda la información principal de una mascota en Firebase.
+     *
+     * @param tipoPet [String] Define el tipo de mascota para almacenar
+     * la información en la base de datos.
+     */
     fun savePrincipalInfo( tipoPet:String){
         val db = FirebaseFirestore.getInstance()
         val tipo = tipoPet
