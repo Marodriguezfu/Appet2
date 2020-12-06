@@ -56,7 +56,10 @@ class LoginActivity : AppCompatActivity() {
 
 
     }
-    //FUNCION SETUP
+
+    /**
+     * Setea la funcionalidad de los botones de la actividad
+     */
     private fun setup() {
         title = "Inicio de sesión"
 

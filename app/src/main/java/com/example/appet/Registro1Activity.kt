@@ -51,12 +51,6 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
             //Llamamos la actividad Registro 2
             //showRegistro2(departamento)
 
-            perrito.hepatitis = 4
-            gatito.leucemia=1
-            perrito.moquilloFecha=ciudad
-            gatito.tripleFelinaFecha=departamento
-
-
 
             val data = hashMapOf("provider" to "BASIC", "departamento" to departamento, "municipio" to ciudad )
             db.collection("users").document(email ?: "").set(
@@ -112,7 +106,12 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
         //Toast.makeText(applicationContext , "$items", Toast.LENGTH_LONG).show()
     }
 
-    //Creamos una funcion para crear el array de departamentos de Colombia
+    /**
+     * Crea el arreglo de departamentos Colombiano.
+     *
+     * @return Un ArrayList de [String] con el nombre de los
+     * departamentos de Colombia.
+     */
     private fun arrayDep(): ArrayList<String> {
         val departamentos = arrayListOf<String>() //Creamos el array de departamentos de Colombia
         departamentos.addAll(listOf("Seleccionar Departamento","Amazonas","Antioquia",
@@ -126,7 +125,13 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
     }
 
 
-    //Creamos una funcion para crear el array de las ciudades de cada departamentos de Colombia// En lo posible cambiar esto a json
+    /**
+     * Crea el arreglo de departamentos Colombiano.
+     *
+     * @param departamento del cual se deben tomar las ciudades
+     * @return Un ArrayList de [String] con el nombre de los
+     * municipios del [departamento].
+     */
     private fun arrayCity(departamento:String?): ArrayList<String> {
         val ciudades = arrayListOf<String>() //Creamos el array de ciudades del departamento de Colombia
         if(departamento.equals("Seleccionar Departamento")){
@@ -367,7 +372,9 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
         return ciudades
     }
 
-
+    /**
+     * Inicia la actividad RegistroMascota
+     */
     private fun showMascota(email: String, provider: String) {
         // IR A HOME
         val registroMascotaIntent = Intent(this, RegistroMascotaActivity::class.java).apply {    //CREAR UN INTENT A LA NUEVA PANTALLA Y NAVEGAR A LA NUEVA PANTALLA
