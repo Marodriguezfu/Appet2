@@ -11,7 +11,6 @@
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity android:name=".RegistroVacunasActivity"></activity>
         <activity android:name=".RegistroMascotaActivity" />
-        <activity android:name=".Registro2Activity" />
         <activity android:name=".Registro1Activity" /> <!-- Se definen el logo de las notificaciones push -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
