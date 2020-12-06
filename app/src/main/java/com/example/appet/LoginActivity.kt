@@ -67,11 +67,11 @@ class LoginActivity : AppCompatActivity() {
                     if (it.isSuccessful) {
                         showHome(it.result?.user?.email ?: "", ProviderType.BASIC) //los signos de interrogación son porque el email puede o no existir( Por lo que estas son condiciones por si no existe envíe un string vacío
                     }else {
-                        showAlert2() //SI NO SE REGISTRA CREA UNA ALERTA
+                        showAlert(2) //SI NO SE REGISTRA CREA UNA ALERTA
                     }
                 }
             }else {
-                showAlert1() //Si estan vacios los campos
+                showAlert(1) //Si estan vacios los campos
             }
         }
 
@@ -88,31 +88,31 @@ class LoginActivity : AppCompatActivity() {
         }
 
 
+    /**
+     * Muestra un cuadro de alerta amigable cuando el usuario comete un error.
+     *
+     * @param caso número que reconoce el error cometido por el usuario.
+     */
+    private fun showAlert(caso: Int){
 
-    //FUNCIONES QUE PRODUCEN UNA ALERTA SI ALGO ESTA MAL
-
-    //La funcion showAlert1 mostrara un mensaje que le diga al usuario que no introdujo parte de la informacion (usuario, contraseña o ambos)
-    private fun showAlert1(){
+        var mensaje: String;
+        when (caso) {
+            1 -> mensaje = "Los campos requeridos para el inicio de sesión se encuentran vacios"
+            2 -> mensaje = "Usted no se encuentra registrado en Miauff o ha cometido un error a la hora de iniciar sesión"
+            else -> mensaje = "Ocurrio un Error inesperado"
+        }
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
-        builder.setMessage("Los campos requeridos para el inicio de sesión se encuentran vacios")
-        builder.setPositiveButton("Aceptar",null)
+        builder.setMessage(mensaje)
+        builder.setPositiveButton("Aceptar", null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
 
-    //La funcion showAlert2 mostrara un mensaje que le indica al usuario que no se encuentra registrado en la aplicacion, o ha cometido un error al digitar sus credenciales
-    private fun showAlert2(){
-
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Error")
-        builder.setMessage("Usted no se encuentra registrado en Miauff o ha cometido un error a la hora de iniciar sesión")
-        builder.setPositiveButton("Aceptar",null)
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
-    }
-
+    /**
+     * Inicia la actividad principal
+     */
     private fun showHome(email: String, provider: ProviderType) {
         // IR A HOME
         val homeIntent = Intent(this, HomeActivity::class.java).apply {    //CREAR UN INTENT A LA NUEVA PANTALLA Y NAVEGAR A LA NUEVA PANTALLA
@@ -140,18 +140,16 @@ class LoginActivity : AppCompatActivity() {
                         if (it.isSuccessful) {
                             showHome(account.email ?: "", ProviderType.GOOGLE) // PASAR A LA NUEVA PANTALLA,los signos de interrogación son porque el email puede o no existir( Por lo que estas son condiciones por si no existe envíe un string vacío
                         } else {
-                            showAlert2()//El usuario ya esta registrado
+                            showAlert(2)//El usuario no esta registrado
                         }
                     }
                 }
 
             } catch (e: ApiException) {
-                showAlert2()
+                showAlert(2)
             }
 
 
         }
     }
-
-
 }

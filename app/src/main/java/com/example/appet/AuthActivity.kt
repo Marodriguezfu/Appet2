@@ -52,7 +52,9 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
-    //FUNCION SETUP
+    /**
+     * Se encarga de setear la configuración de la pantalla de Autenticación.
+     */
     private fun setup() {
         title = "Autenticación"
 
@@ -103,8 +105,11 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
-    //FUNCIONES QUE PRODUCEN UNA ALERTA SI ALGO ESTA MAL
-
+    /**
+     * Muestra un cuadro de alerta amigable cuando el usuario comete un error.
+     *
+     * @param caso número que reconoce el error cometido por el usuario.
+     */
     private fun showAlert(caso: Int){
 
         var mensaje: String;
@@ -123,6 +128,9 @@ class AuthActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    /**
+     * Inicia la actividad Registro1
+     */
     private fun showRegistro(email: String, provider: ProviderType) {
         // IR A HOME
         val registro1Intent = Intent(this, Registro1Activity::class.java).apply {    //CREAR UN INTENT A LA NUEVA PANTALLA Y NAVEGAR A LA NUEVA PANTALLA

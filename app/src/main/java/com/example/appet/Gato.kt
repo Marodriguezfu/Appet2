@@ -23,12 +23,14 @@ class Gato(
     edad: Int
 ) : Mascota(propietario, nombre, sexo, raza, colorPelo, peso, edad) {
 
-    var moquillo : Int = 0
-    var moquilloFecha : String = " "
-    var tripleFelina : Int = 0
-    var tripleFelinaFecha : String = " "
     var leucemia : Int = 0
     var leucemiaFecha : String = " "
+    var rinotraqueitis : Int = 0
+    var rinotraqueitisFecha : String = " "
+    var panleucopenia : Int = 0
+    var panleucopeniaFecha : String = " "
+    var calcivirosis : Int = 0
+    var calcivirosisFecha : String = " "
     var rabia : Int = 0
     var rabiaFecha : String = " "
 
@@ -40,8 +42,8 @@ class Gato(
         savePrincipalInfo("Gato")
         val db = FirebaseFirestore.getInstance()
 
-        val data = hashMapOf("moquillo" to moquillo, "moquilloFecha" to moquilloFecha, "tripleFelina" to tripleFelina, "tripleFelinaFecha" to tripleFelinaFecha, "leucemia" to leucemia,
-            "leucemiaFecha" to leucemiaFecha, "rabia" to rabia, "rabiaFecha" to rabiaFecha)
+        val data = hashMapOf("rinotraqueitis" to rinotraqueitis, "rinotraqueitisFecha" to rinotraqueitisFecha, "panleucopenia" to panleucopenia, "panleucopeniaFecha" to panleucopeniaFecha, "leucemia" to leucemia,
+            "leucemiaFecha" to leucemiaFecha,"calcivirosis" to calcivirosis, "calcivirosisFecha" to calcivirosisFecha, "rabia" to rabia, "rabiaFecha" to rabiaFecha)
         db.collection("vacunas").document(propietario ?: "").collection("Gato").document(nombre ?: "").set(
             data
         )
