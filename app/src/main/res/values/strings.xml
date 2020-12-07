@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Miauff</string>
     <string name="prefs_file">com.example.appet.PREFERENCE_FILE_KEY</string>
+    <string name="buttonProfilePïc">Boton imagen del perfiñ</string>
 </resources>
