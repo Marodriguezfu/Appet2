@@ -20,8 +20,8 @@ class Perro(
     raza: String,
     colorPelo: String,
     peso: String,
-    edad: String
-) : Mascota(propietario, nombre, sexo, raza, colorPelo, peso, edad) {
+    birthDate: String
+) : Mascota(propietario, nombre, sexo, raza, colorPelo, peso, birthDate) {
 
     var moquillo : String = " "
     var moquilloFecha : String = " "
