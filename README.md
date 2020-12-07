@@ -35,13 +35,131 @@ Para el desarrollo de este proyecto de programación el grupo de trabajo utiliz�
 
 La aplicación se encuentra desarrollada a base de activities, clases que tienen por objeto la realización de pantallas, se utilizaron otros elementoss dispuestos por la IDE para el trabajo con botones, imagenes y textos. Contando actualmente con 7 activities.
 
+Para almacenar la información de los usuarios y además permitir el registro e inicio de sesión en la aplicación se utiliza el servicio de google [Firebase](https://firebase.google.com/?authuser=4) para lo que se deben implementar diversas librerias para poder utilizar los diversos servicios de este servicio.
+
+![](images/firebase_implementation.JPG)
+
+Para usar imágenes de tipo circulares fue necesario implementar la libreria desarrollada por el usuario [hdodenhof](https://github.com/hdodenhof) de nombre [CircleImageView](https://github.com/hdodenhof/CircleImageView)
+
 A continuación se exponen las clases desarrolladas por el equipo de trabajo, estas clases al igual que las funciones desarrolladas por el equipo de trabajo se encuentran debidamente documentados utilizando [KDoc Syntax](https://kotlinlang.org/docs/reference/kotlin-doc.html)
 
 ### Implementación de Clases
 
-#### Clase Abstracta Mascota
+#### Clase Abstracta ```Mascota```
 
-Mascota es una clase abstracta utilizada como padre de las clases Perro y Gato, se abstrae Mascota al contar con el método abstracto saveInformation() debido a que en las clases que heredan de ella se debe realizar este método de formas distintas, teniendo su propia información. Las clases de 
+```Mascota``` es una clase abstracta utilizada como padre de las clases Perro y Gato, se abstrae Mascota al contar con el método abstracto ```saveInformation()``` debido a que en las clases que heredan de ella se debe realizar este método de formas distintas, teniendo su propia información.
+
+Los atributos de esta clase son las caracteristicas principales de una mascota, su nombre, raza, peso, sexo, fecha de nacimiento, color de pelo además de su propietario. Cuenta con el método ```savePrincipalInfo( tipoPet:String)``` que se encarga de almacenar la información suministrada en el constructor de esta clase y almacenado en sus atributos. El parámetro que se muetra permite organizar de mejor manera la base de datos de Firebase con el tipo de mascota. Este método se muestra a continuación.
+
+``` kotlin
+    /**
+     * Guarda la información principal de una mascota en Firebase.
+     *
+     * @param tipoPet [String] Define el tipo de mascota para almacenar
+     * la información en la base de datos.
+     */
+    fun savePrincipalInfo( tipoPet:String){
+        val db = FirebaseFirestore.getInstance()
+        val tipo = tipoPet
+
+        val data = hashMapOf("nombreMascota" to nombre, "genero" to sexo, "raza" to raza,"colorPelo" to colorPelo,"peso" to peso+" kg", "Fecha de Nacimiento" to birthDate )
+        db.collection("mascota").document(propietario ?: "").collection(tipo).document(nombre?: "").set(
+            data , SetOptions.merge()
+        )
+    }
+```
+
+#### Clase ```Perro```
+
+```Perro``` es una clase que hereda de ```Mascota``` cuenta ademas con los atributos referentes a la vacunación de un perro. Es por esto, que esta clase emplea el método constructor de ```Mascota``` y además se definen los atributos, como se muestra a continuación.
+
+``` kotlin
+class Perro(
+    propietario: String,
+    nombre: String,
+    sexo: String,
+    raza: String,
+    colorPelo: String,
+    peso: String,
+    birthDate: String
+) : Mascota(propietario, nombre, sexo, raza, colorPelo, peso, birthDate) {
+
+    var moquillo : String = " "
+    var moquilloFecha : String = " "
+    var hepatitis : String = " "
+    var hepatitisFecha : String = " "
+    var parvovirosis : String = " "
+    var parvovirosisFecha : String = " "
+    var leptospirosis : String = " "
+    var leptospirosisFecha : String = " "
+    var rabia : String = " "
+    var rabiaFecha : String = " "
+```
+
+Se implementa el método abstracto ```saveInformation()``` permitiendo almacenar en la base de datos de Firebase del proyecto toda la información del perro al llamar el método ```savePrincipalInfo( tipoPet:String)``` dentro del método con el parámetro ```"Perro"```. A continuación se muestra este método.
+
+``` kotlin
+    /**
+     * Envia los atributos de un obbjeto de la clase perro
+     * a una base de datos de Firebase.
+     */
+    override fun saveInformation() {
+        savePrincipalInfo("Perro")
+        val db = FirebaseFirestore.getInstance()
+
+        val data = hashMapOf("moquillo" to moquillo, "moquilloFecha" to moquilloFecha, "hepatitis" to hepatitis, "hepatitisFecha" to hepatitisFecha, "parvovirosis" to parvovirosis,
+            "parvovirosisFecha" to parvovirosisFecha, "leptospirosis" to leptospirosis, "leptospirosisFecha" to leptospirosisFecha, "rabia" to rabia, "rabiaFecha" to rabiaFecha)
+        db.collection("vacunas").document(propietario ?: "").collection("Perro").document(nombre ?: "").set(
+            data
+        )
+    }
+```
+#### Clase ```Gato```
+
+```Gato``` es una clase que hereda de ```Mascota``` cuenta ademas con los atributos referentes a la vacunación de un gato. Es por esto, que esta clase emplea el método constructor de ```Mascota``` y además se definen los atributos, como se muestra a continuación.
+
+``` kotlin
+class Gato(
+    propietario: String,
+    nombre: String,
+    sexo: String,
+    raza: String,
+    colorPelo: String,
+    peso: String,
+    birthDate: String
+) : Mascota(propietario, nombre, sexo, raza, colorPelo, peso, birthDate) {
+
+    var leucemia : String = " "
+    var leucemiaFecha : String = " "
+    var rinotraqueitis : String = " "
+    var rinotraqueitisFecha : String = " "
+    var panleucopenia : String = " "
+    var panleucopeniaFecha : String = " "
+    var calcivirosis : String = " "
+    var calcivirosisFecha : String = " "
+    var rabia : String = " "
+    var rabiaFecha : String = " "
+```
+
+Se implementa el método abstracto ```saveInformation()``` permitiendo almacenar en la base de datos de Firebase del proyecto toda la información del perro al llamar el método ```savePrincipalInfo( tipoPet:String)``` dentro del método con el parámetro ```"Gato"```. A continuación se muestra este método.
+
+
+``` kotlin
+    /**
+     * Envia los atributos de un obbjeto de la clase gato
+     * a una base de datos de Firebase
+     */
+    override fun saveInformation() {
+        savePrincipalInfo("Gato")
+        val db = FirebaseFirestore.getInstance()
+
+        val data = hashMapOf("rinotraqueitis" to rinotraqueitis, "rinotraqueitisFecha" to rinotraqueitisFecha, "panleucopenia" to panleucopenia, "panleucopeniaFecha" to panleucopeniaFecha, "leucemia" to leucemia,
+            "leucemiaFecha" to leucemiaFecha,"calcivirosis" to calcivirosis, "calcivirosisFecha" to calcivirosisFecha, "rabia" to rabia, "rabiaFecha" to rabiaFecha)
+        db.collection("vacunas").document(propietario ?: "").collection("Gato").document(nombre ?: "").set(
+            data
+        )
+    }
+```
 
 ## Trabajo Futuro
 
