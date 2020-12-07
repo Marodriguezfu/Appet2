@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/mascotas_opt"
+        android:icon="@drawable/logo_miauff_sin_texto"
+        android:title="Mascotas" />
+
+    <item android:id="@+id/galleria_opt"
+        android:icon="@drawable/gallery_icon"
+        android:title="Galeria" />
+    <item
+        android:title="Log Out"
+        android:id="@+id/more_btn"
+        android:icon="@drawable/settings_icon">
+
+    </item>
+
+</menu>

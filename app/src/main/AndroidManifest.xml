@@ -31,7 +31,6 @@
             android:theme="@style/SplashTheme"> <!-- -Se hace utilizar el tema creado -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- -Bloque de codigo para poder ejecutar notificaciones push en segundo plano -->

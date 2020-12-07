@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.home_content.*
+import kotlinx.android.synthetic.main.top_app_bar.*
 
 enum class ProviderType {
     BASIC, //TIPO DE AUTENTICACION BASICA(CORREO Y CONTRASEÑA)
@@ -16,7 +18,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
+        setSupportActionBar(top_appbar)
         //Setup
         val bundle = intent.extras //RECUPERAR LOS PARAMETROS
         val email =  bundle?.getString("email")//Se accede al map en donde se almacenan los datos
