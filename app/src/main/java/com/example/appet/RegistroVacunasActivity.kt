@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.AdapterView
 import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.activity_registro_vacunas.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -119,15 +120,44 @@ class RegistroVacunasActivity : AppCompatActivity() {
         }
 
         morePet.setOnClickListener{
-            saveDataPet()
-            showMascota(email,provider)
+            if(fechaDeNacimiento == ""){
+                showAlert(1)
+            } else {
+                saveDataPet()
+                showMascota(email, provider)
+            }
         }
 
         noMorePet.setOnClickListener{
-            saveDataPet()
-            showFoto(email,provider)
+            if(fechaDeNacimiento == ""){
+                showAlert(1)
+            } else {
+                saveDataPet()
+                showFoto(email, provider)
+            }
         }
 
+    }
+
+    /**
+     * Muestra un cuadro de alerta amigable cuando el usuario comete un error.
+     *
+     * @param caso número que reconoce el error cometido por el usuario.
+     */
+    private fun showAlert(caso: Int){
+
+        var mensaje: String;
+        when (caso) {
+            1 -> mensaje = "Debe seleccionar la fecha de nacimiento de su peludo para continuar"
+            else -> mensaje = "Ocurrio un Error inesperado"
+        }
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Error")
+        builder.setMessage(mensaje)
+        builder.setPositiveButton("Aceptar", null)
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
 
     /**
