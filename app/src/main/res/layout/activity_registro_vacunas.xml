@@ -12,9 +12,10 @@
         android:layout_width="150dp"
         android:layout_height="45dp"
         android:layout_marginStart="35dp"
-        android:text="Numero de dosis"
         android:textAlignment="center"
         android:textSize="15dp"
+        android:hint="Numero de dosis"
+        android:textColorHint="#000000"
         android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dateVacuna4" />
@@ -24,8 +25,9 @@
         android:layout_width="150dp"
         android:layout_height="45dp"
         android:layout_marginStart="45dp"
-        android:text="Numero de dosis"
         android:textAlignment="center"
+        android:hint="Numero de dosis"
+        android:textColorHint="#000000"
         android:textSize="15dp"
         android:textColor="#000000"
         app:layout_constraintStart_toEndOf="@+id/dateVacuna4"
@@ -36,9 +38,10 @@
         android:layout_width="150dp"
         android:layout_height="45dp"
         android:layout_marginStart="127dp"
-        android:text="Numero de dosis"
         android:textAlignment="center"
         android:textSize="15dp"
+        android:hint="Numero de dosis"
+        android:textColorHint="#000000"
         android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dateVacuna3" />
@@ -48,8 +51,9 @@
         android:layout_width="150dp"
         android:layout_height="45dp"
         android:layout_marginStart="44dp"
-        android:text="Numero de dosis"
         android:textAlignment="center"
+        android:hint="Numero de dosis"
+        android:textColorHint="#000000"
         android:textSize="15dp"
         android:textColor="#000000"
         app:layout_constraintStart_toEndOf="@+id/dateVacuna1"
@@ -181,10 +185,26 @@
         android:layout_marginStart="35dp"
         android:textAlignment="center"
         android:textSize="15dp"
-        android:text="Numero de dosis"
         android:textColor="#000000"
+        android:hint="Numero de dosis"
+        android:textColorHint="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dateVacuna1" />
+
+    <Button
+        android:id="@+id/buttonRegistrarMascota"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/colorAccent"
+        android:text="Registrar Mascota"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

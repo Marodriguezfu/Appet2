@@ -19,19 +19,19 @@ class Gato(
     sexo: String,
     raza: String,
     colorPelo: String,
-    peso: Double,
-    edad: Int
+    peso: String,
+    edad: String
 ) : Mascota(propietario, nombre, sexo, raza, colorPelo, peso, edad) {
 
-    var leucemia : Int = 0
+    var leucemia : String = " "
     var leucemiaFecha : String = " "
-    var rinotraqueitis : Int = 0
+    var rinotraqueitis : String = " "
     var rinotraqueitisFecha : String = " "
-    var panleucopenia : Int = 0
+    var panleucopenia : String = " "
     var panleucopeniaFecha : String = " "
-    var calcivirosis : Int = 0
+    var calcivirosis : String = " "
     var calcivirosisFecha : String = " "
-    var rabia : Int = 0
+    var rabia : String = " "
     var rabiaFecha : String = " "
 
     /**

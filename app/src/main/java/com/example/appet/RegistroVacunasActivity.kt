@@ -14,13 +14,47 @@ class RegistroVacunasActivity : AppCompatActivity() {
     private var mesObtenido = 0
     private var añoObtenido = 0
     private var fechaDeNacimiento = ""
-    private var guardado = false
 
     val date = Calendar.getInstance().time
     val formatter = SimpleDateFormat.getDateTimeInstance() //or use getDateInstance()
     val sdf = SimpleDateFormat("yyyy/MM/dd")
     var formatedDate = sdf.format(date)
-    var tipoMascotaP = ""
+    private var tipoMascotaP = ""
+    private var nombreMascota = ""
+    private var sexoMascota = ""
+    private var razaMascota = ""
+    private var colorMascota = ""
+    private var pesoMascota = ""
+
+    //Perro
+    private var moquillo = ""
+    private var moquilloFecha = ""
+    private var hepatitis = ""
+    private var hepatitisFecha = ""
+    private var parvovirosis = ""
+    private var parvovirosisFecha = ""
+    private var leptospirosis = ""
+    private var leptospirosisFecha = ""
+
+
+    //Compartidos
+    private var rabia = ""
+    private var rabiaFecha = ""
+
+    //Gato
+
+    private var leucemia = ""
+    private var leucemiaFecha = ""
+    private var rinotraqueitis = ""
+    private var rinotraqueitisFecha = ""
+    private var panleucopenia = ""
+    private var panleucopeniaFecha = ""
+    private var calcivirosis = ""
+    private var calcivirosisFecha = ""
+
+    private var email = ""
+    private var provider = ""
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +67,15 @@ class RegistroVacunasActivity : AppCompatActivity() {
 
         val nombre =  bundle?.getString("nombreMascota")
         val tipoMascota =  bundle?.getString("tipoMascota")
+        nombreMascota = bundle?.getString("nombreMascota").toString()
+        sexoMascota = bundle?.getString("sexoMascota").toString()
+        razaMascota = bundle?.getString("razaMascota").toString()
+        colorMascota = bundle?.getString("colorMascota").toString()
+        pesoMascota = bundle?.getString("pesoMascota").toString()
         tipoMascotaP = tipoMascota ?: ""
+        email = bundle?.getString("email").toString()
+        provider = bundle?.getString("provider").toString()
+
         if(tipoMascota == "Perro") {
             dateVacuna1.setText("Moquillo")
             dateVacuna2.setText("Hepatitis")
@@ -74,6 +116,73 @@ class RegistroVacunasActivity : AppCompatActivity() {
             it.setBackgroundColor(0xFF4CAF50.toInt())
             showDatePickerDialog(dateVacuna5)
         }
+
+        buttonRegistrarMascota.setOnClickListener{
+
+            if(tipoMascotaP == "Perro"){
+                moquillo = numberVacuna1.text.toString()
+                hepatitis = numberVacuna2.text.toString()
+                parvovirosis = numberVacuna3.text.toString()
+                leptospirosis = numberVacuna4.text.toString()
+                rabia = numberVacuna5.text.toString()
+
+                 var perrito: Perro = Perro(email ?: "",nombreMascota,sexoMascota,razaMascota,colorMascota,pesoMascota,fechaDeNacimiento)
+                perrito.moquillo=moquillo
+                perrito.moquilloFecha=moquilloFecha
+                perrito.hepatitis = hepatitis
+                perrito.hepatitisFecha=hepatitisFecha
+                perrito.parvovirosis = parvovirosis
+                perrito.parvovirosisFecha=parvovirosisFecha
+                perrito.leptospirosis = leptospirosis
+                perrito.leptospirosisFecha=leptospirosisFecha
+                perrito.rabiaFecha=rabiaFecha
+
+                perrito.saveInformation()
+
+                //
+
+            }
+            else{
+                leucemia = numberVacuna1.text.toString()
+                rinotraqueitis = numberVacuna2.text.toString()
+                panleucopenia = numberVacuna3.text.toString()
+                calcivirosis = numberVacuna4.text.toString()
+                rabia = numberVacuna5.text.toString()
+                var gatito: Gato = Gato(email ?: "",nombreMascota,sexoMascota,razaMascota,colorMascota,pesoMascota,fechaDeNacimiento)
+
+                gatito.leucemia = leucemia
+                gatito.leucemiaFecha=leucemiaFecha
+                gatito.rinotraqueitis = rinotraqueitis
+                gatito.rinotraqueitisFecha=rinotraqueitisFecha
+                gatito.panleucopenia = panleucopenia
+                gatito.panleucopeniaFecha = panleucopeniaFecha
+                gatito.calcivirosis = calcivirosis
+                gatito.calcivirosisFecha=calcivirosisFecha
+                gatito.rabia = rabia
+                gatito.rabiaFecha=rabiaFecha
+
+                gatito.saveInformation()
+
+            }
+
+
+
+        println("Su mascota es: " +
+        tipoMascota + " " + "Su nombre es: " +
+        nombreMascota + " " + " Su sexo es " +
+        sexoMascota + " " + " Su raza es " +
+        razaMascota + " " + " El color es " +
+        colorMascota + " " + "El peso es " +
+        pesoMascota + " " + "La fecha de nacimiento es " +
+        fechaDeNacimiento + " Le pertenece a: " +
+                email + " registrado por: " + provider
+        )
+
+
+
+        }
+
+
     }
 
     private fun showDatePickerDialog(parent: EditText) {
@@ -90,6 +199,8 @@ class RegistroVacunasActivity : AppCompatActivity() {
         else if(parent == dateVacuna3 &&  tipoMascotaP == "Perro") {dateVacuna3.setText("Parvovirosis")}
         else if(parent == dateVacuna4 &&  tipoMascotaP == "Perro") {dateVacuna4.setText("Leptospirosis")}
         else if(parent == dateVacuna5 &&  tipoMascotaP == "Perro") {dateVacuna5.setText("Rabia")}
+
+
         else if(parent == dateVacuna1 &&  tipoMascotaP == "Gato" ) {dateVacuna1.setText("Leucemia")}
         else if(parent == dateVacuna2 &&  tipoMascotaP == "Gato" ) {dateVacuna2.setText("Rinotraqueitis")}
         else if(parent == dateVacuna3 &&  tipoMascotaP == "Gato" ) {dateVacuna3.setText("Panleucopenia")}
@@ -100,21 +211,39 @@ class RegistroVacunasActivity : AppCompatActivity() {
         parent.setText(parent.text.toString() + "\n" + diaObtenido.toString()+"/"+(mesObtenido+1).toString()+"/"+añoObtenido.toString())
 
         if(parent==dateCumpleaños){
-            var sdf = formatedDate
-            fechaDeNacimiento = sdf;
-            //Año//MES//DIA
-            println("Tu perro" + sdf)
-            /*
-            var strs = sdf.split("/")
-            println("Tomado fecha año " + strs[0])
-            println("Tomado fecha mes " + strs[1])
-            println("Tomado fecha dia " + strs[2])
-
-            println("Tu perro tiene " + (strs[0].toInt()-añoObtenido) + "años")
-            println("Tu perro tiene " + (strs[1].toInt()-(mesObtenido+1)) + "meses")
-            println("Tu perro tiene " + (strs[2].toInt()-diaObtenido) + "dias")*/
+            fechaDeNacimiento = diaObtenido.toString()+"/"+(mesObtenido+1).toString()+"/"+añoObtenido.toString();
         }
 
+        else if(parent == dateVacuna1 && tipoMascotaP == "Perro") { // Moquillo
+            moquilloFecha = diaObtenido.toString()+"/"+(mesObtenido+1).toString()+"/"+añoObtenido.toString()
+        }
+        else if(parent == dateVacuna2 && tipoMascotaP == "Perro") { // Hepatitis
+            hepatitisFecha = diaObtenido.toString()+"/"+(mesObtenido+1).toString()+"/"+añoObtenido.toString()
+        }
+        else if(parent == dateVacuna3 && tipoMascotaP == "Perro") { // Parvovirosis
+            parvovirosisFecha = diaObtenido.toString()+"/"+(mesObtenido+1).toString()+"/"+añoObtenido.toString()
+        }
+        else if(parent == dateVacuna4 && tipoMascotaP == "Perro") { // Leptospirosis
+            leptospirosisFecha = diaObtenido.toString()+"/"+(mesObtenido+1).toString()+"/"+añoObtenido.toString()
+        }
+        else if(parent == dateVacuna5 && tipoMascotaP == "Perro") { // Rabia
+            rabiaFecha = diaObtenido.toString()+"/"+(mesObtenido+1).toString()+"/"+añoObtenido.toString()
+        }
+        else if(parent == dateVacuna1 && tipoMascotaP == "Gato") { // Leucemia
+            leucemiaFecha = diaObtenido.toString()+"/"+(mesObtenido+1).toString()+"/"+añoObtenido.toString()
+        }
+        else if(parent == dateVacuna2 && tipoMascotaP == "Gato") { // Rinotraqueitis
+            rinotraqueitisFecha = diaObtenido.toString()+"/"+(mesObtenido+1).toString()+"/"+añoObtenido.toString()
+        }
+        else if(parent == dateVacuna3 && tipoMascotaP == "Gato") { // Panleucopenia
+            panleucopeniaFecha = diaObtenido.toString()+"/"+(mesObtenido+1).toString()+"/"+añoObtenido.toString()
+        }
+        else if(parent == dateVacuna4 && tipoMascotaP == "Gato") { // Calcivirosis
+            calcivirosisFecha = diaObtenido.toString()+"/"+(mesObtenido+1).toString()+"/"+añoObtenido.toString()
+        }
+        else if(parent == dateVacuna5 && tipoMascotaP == "Gato") { // Rabia
+            rabiaFecha = diaObtenido.toString()+"/"+(mesObtenido+1).toString()+"/"+añoObtenido.toString()
+        }
     }
 
     override fun onBackPressed() {

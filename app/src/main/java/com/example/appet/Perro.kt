@@ -19,19 +19,19 @@ class Perro(
     sexo: String,
     raza: String,
     colorPelo: String,
-    peso: Double,
-    edad: Int
+    peso: String,
+    edad: String
 ) : Mascota(propietario, nombre, sexo, raza, colorPelo, peso, edad) {
 
-    var moquillo : Int = 0
+    var moquillo : String = " "
     var moquilloFecha : String = " "
-    var hepatitis : Int = 0
+    var hepatitis : String = " "
     var hepatitisFecha : String = " "
-    var parvovirosis : Int = 0
+    var parvovirosis : String = " "
     var parvovirosisFecha : String = " "
-    var leptospirosis : Int = 0
+    var leptospirosis : String = " "
     var leptospirosisFecha : String = " "
-    var rabia : Int = 0
+    var rabia : String = " "
     var rabiaFecha : String = " "
 
     /**

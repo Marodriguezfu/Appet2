@@ -41,10 +41,6 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
         spinner?.adapter = arrayAdapter //Se envia el array que ya hemos adatado al spinner
         spinner?.onItemSelectedListener = this //Se define el spinner
 
-        var perrito: Perro = Perro(email ?: "","prince","Hembra","Pincher","Fucsia",30.0,10)
-        var gatito: Gato = Gato(email ?: "","cosita","Macho","siames","Fucsia",25.0,12)
-
-
 
         buttonNext.setOnClickListener {
 
@@ -60,10 +56,7 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
             //showMascota()
             //val textooculto = findViewById(R.id.ciudadMunicipioText)
 
-            //gatito.savePrincipalInfo()
-            gatito.saveInformation()
-            //perrito.savePrincipalInfo()
-            perrito.saveInformation()
+
 
            /* TextView view = (TextView) findViewById(R.id.textView);
             view.setText("Add your text here");

@@ -4,14 +4,14 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 
 
-abstract class Mascota(propietario: String, nombre: String, sexo: String, raza: String, colorPelo: String, peso : Double, edad:Int) {
+abstract class Mascota(propietario: String, nombre: String, sexo: String, raza: String, colorPelo: String, peso : String, edad:String) {
     var propietario : String = propietario
     var nombre : String = nombre
     var sexo : String = sexo
     var raza : String = raza
     var colorPelo : String = colorPelo
-    var peso: Double = peso
-    var edad : Int = edad
+    var peso: String = peso
+    var edad : String = edad
 
     /**
      * Guarda la información principal de una mascota en Firebase.
