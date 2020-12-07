@@ -85,7 +85,12 @@ class HomeActivity : AppCompatActivity() {
                 true
             }
             R.id.settings_btn ->{
-                //Agregar Acción que desee que haga este botón.
+                val profileIntent = Intent(this, ProfileActivity::class.java).apply {    //CREAR UN INTENT A LA NUEVA PANTALLA Y NAVEGAR A LA NUEVA PANTALLA
+                    /*** //PARAMETROS A PASAR
+                    putExtra("email", view.email) //PASARLE EL EMAIL A LA NUEVA PANTALLA
+                    putExtra("provider", provider.name) //PASARLE EL PROVEEDOR A LA NUEVA PANTALLA***/
+                }
+                startActivity(profileIntent)
               true
             }
             R.id.log_out_opt ->{
