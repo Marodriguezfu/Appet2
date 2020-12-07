@@ -1,5 +1,6 @@
 package com.example.appet
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.AdapterView
@@ -117,72 +118,77 @@ class RegistroVacunasActivity : AppCompatActivity() {
             showDatePickerDialog(dateVacuna5)
         }
 
-        buttonRegistrarMascota.setOnClickListener{
+        morePet.setOnClickListener{
+            saveDataPet()
+            showMascota(email,provider)
+        }
 
-            if(tipoMascotaP == "Perro"){
-                moquillo = numberVacuna1.text.toString()
-                hepatitis = numberVacuna2.text.toString()
-                parvovirosis = numberVacuna3.text.toString()
-                leptospirosis = numberVacuna4.text.toString()
-                rabia = numberVacuna5.text.toString()
+        noMorePet.setOnClickListener{
+            saveDataPet()
+            showFoto(email,provider)
+        }
 
-                 var perrito: Perro = Perro(email ?: "",nombreMascota,sexoMascota,razaMascota,colorMascota,pesoMascota,fechaDeNacimiento)
-                perrito.moquillo=moquillo
-                perrito.moquilloFecha=moquilloFecha
-                perrito.hepatitis = hepatitis
-                perrito.hepatitisFecha=hepatitisFecha
-                perrito.parvovirosis = parvovirosis
-                perrito.parvovirosisFecha=parvovirosisFecha
-                perrito.leptospirosis = leptospirosis
-                perrito.leptospirosisFecha=leptospirosisFecha
-                perrito.rabiaFecha=rabiaFecha
+    }
 
-                perrito.saveInformation()
+    private fun saveDataPet(){
+        if(tipoMascotaP == "Perro"){
+            moquillo = numberVacuna1.text.toString()
+            hepatitis = numberVacuna2.text.toString()
+            parvovirosis = numberVacuna3.text.toString()
+            leptospirosis = numberVacuna4.text.toString()
+            rabia = numberVacuna5.text.toString()
 
-                //
+            var perrito: Perro = Perro(email ?: "",nombreMascota,sexoMascota,razaMascota,colorMascota,pesoMascota,fechaDeNacimiento)
+            perrito.moquillo=moquillo
+            perrito.moquilloFecha=moquilloFecha
+            perrito.hepatitis = hepatitis
+            perrito.hepatitisFecha=hepatitisFecha
+            perrito.parvovirosis = parvovirosis
+            perrito.parvovirosisFecha=parvovirosisFecha
+            perrito.leptospirosis = leptospirosis
+            perrito.leptospirosisFecha=leptospirosisFecha
+            perrito.rabiaFecha=rabiaFecha
 
-            }
-            else{
-                leucemia = numberVacuna1.text.toString()
-                rinotraqueitis = numberVacuna2.text.toString()
-                panleucopenia = numberVacuna3.text.toString()
-                calcivirosis = numberVacuna4.text.toString()
-                rabia = numberVacuna5.text.toString()
-                var gatito: Gato = Gato(email ?: "",nombreMascota,sexoMascota,razaMascota,colorMascota,pesoMascota,fechaDeNacimiento)
+            perrito.saveInformation()
 
-                gatito.leucemia = leucemia
-                gatito.leucemiaFecha=leucemiaFecha
-                gatito.rinotraqueitis = rinotraqueitis
-                gatito.rinotraqueitisFecha=rinotraqueitisFecha
-                gatito.panleucopenia = panleucopenia
-                gatito.panleucopeniaFecha = panleucopeniaFecha
-                gatito.calcivirosis = calcivirosis
-                gatito.calcivirosisFecha=calcivirosisFecha
-                gatito.rabia = rabia
-                gatito.rabiaFecha=rabiaFecha
+            //
 
-                gatito.saveInformation()
+        }
+        else{
+            leucemia = numberVacuna1.text.toString()
+            rinotraqueitis = numberVacuna2.text.toString()
+            panleucopenia = numberVacuna3.text.toString()
+            calcivirosis = numberVacuna4.text.toString()
+            rabia = numberVacuna5.text.toString()
+            var gatito: Gato = Gato(email ?: "",nombreMascota,sexoMascota,razaMascota,colorMascota,pesoMascota,fechaDeNacimiento)
 
-            }
+            gatito.leucemia = leucemia
+            gatito.leucemiaFecha=leucemiaFecha
+            gatito.rinotraqueitis = rinotraqueitis
+            gatito.rinotraqueitisFecha=rinotraqueitisFecha
+            gatito.panleucopenia = panleucopenia
+            gatito.panleucopeniaFecha = panleucopeniaFecha
+            gatito.calcivirosis = calcivirosis
+            gatito.calcivirosisFecha=calcivirosisFecha
+            gatito.rabia = rabia
+            gatito.rabiaFecha=rabiaFecha
 
-
-
-        println("Su mascota es: " +
-        tipoMascota + " " + "Su nombre es: " +
-        nombreMascota + " " + " Su sexo es " +
-        sexoMascota + " " + " Su raza es " +
-        razaMascota + " " + " El color es " +
-        colorMascota + " " + "El peso es " +
-        pesoMascota + " " + "La fecha de nacimiento es " +
-        fechaDeNacimiento + " Le pertenece a: " +
-                email + " registrado por: " + provider
-        )
-
-
+            gatito.saveInformation()
 
         }
 
 
+
+        println("Su mascota es: " +
+                tipoMascotaP + " " + "Su nombre es: " +
+                nombreMascota + " " + " Su sexo es " +
+                sexoMascota + " " + " Su raza es " +
+                razaMascota + " " + " El color es " +
+                colorMascota + " " + "El peso es " +
+                pesoMascota + " " + "La fecha de nacimiento es " +
+                fechaDeNacimiento + " Le pertenece a: " +
+                email + " registrado por: " + provider
+        )
     }
 
     private fun showDatePickerDialog(parent: EditText) {
@@ -248,6 +254,34 @@ class RegistroVacunasActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         //super.onBackPressed()
+    }
+
+    /**
+     * Inicia la actividad RegistroMascota
+     */
+    private fun showMascota(email: String, provider: String) {
+        // IR A HOME
+        val registroMascotaIntent = Intent(this, RegistroMascotaActivity::class.java).apply {    //CREAR UN INTENT A LA NUEVA PANTALLA Y NAVEGAR A LA NUEVA PANTALLA
+            //PARAMETROS A PASAR
+            putExtra("email", email) //PASARLE EL EMAIL A LA NUEVA PANTALLA
+            putExtra("provider", provider) //PASARLE EL PROVEEDOR A LA NUEVA PANTALLA
+        }
+        startActivity(registroMascotaIntent) //LA NAVEGACION A LA NUEVA PANTALLA
+        finish()
+    }
+
+    /**
+     * Inicia la actividad RegistroMascota
+     */
+    private fun showFoto(email: String, provider: String) {
+        // IR A HOME
+        val fotoIntent = Intent(this, RegistroFotoActivity::class.java).apply {    //CREAR UN INTENT A LA NUEVA PANTALLA Y NAVEGAR A LA NUEVA PANTALLA
+            //PARAMETROS A PASAR
+            putExtra("email", email) //PASARLE EL EMAIL A LA NUEVA PANTALLA
+            putExtra("provider", provider) //PASARLE EL PROVEEDOR A LA NUEVA PANTALLA
+        }
+        startActivity(fotoIntent) //LA NAVEGACION A LA NUEVA PANTALLA
+        finish()
     }
 
 }
