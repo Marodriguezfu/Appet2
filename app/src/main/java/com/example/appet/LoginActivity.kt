@@ -10,6 +10,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_auth.*
 import kotlinx.android.synthetic.main.activity_login.*
@@ -66,13 +67,18 @@ class LoginActivity : AppCompatActivity() {
         //ENTRAR CON UN USUARIO REGISTRADO
         log_in_button.setOnClickListener {
             if (user_login.text.isNotEmpty() && password_login.text.isNotEmpty()) {
-                FirebaseAuth.getInstance().signInWithEmailAndPassword(user_login.text.toString(),password_login.text.toString()).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        //showHome(it.result?.user?.email ?: "", ProviderType.BASIC) //los signos de interrogación son porque el email puede o no existir( Por lo que estas son condiciones por si no existe envíe un string vacío
-                        showFoto(it.result?.user?.email ?: "", ProviderType.BASIC)
-                    }else {
-                        showAlert(2) //SI NO SE REGISTRA CREA UNA ALERTA
+                var currentUser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+                if(currentUser.isEmailVerified){
+                    FirebaseAuth.getInstance().signInWithEmailAndPassword(user_login.text.toString(),password_login.text.toString()).addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            //showHome(it.result?.user?.email ?: "", ProviderType.BASIC) //los signos de interrogación son porque el email puede o no existir( Por lo que estas son condiciones por si no existe envíe un string vacío
+                            showFoto(it.result?.user?.email ?: "", ProviderType.BASIC)
+                        }else {
+                            showAlert(2) //SI NO SE REGISTRA CREA UNA ALERTA
+                        }
                     }
+                }else{
+                    showAlert(3)
                 }
             }else {
                 showAlert(1) //Si estan vacios los campos
@@ -103,6 +109,7 @@ class LoginActivity : AppCompatActivity() {
         when (caso) {
             1 -> mensaje = "Los campos requeridos para el inicio de sesión se encuentran vacios"
             2 -> mensaje = "Usted no se encuentra registrado en Miauff o ha cometido un error a la hora de iniciar sesión"
+            3 -> mensaje = "Entra a tu correo para verificar tu email y así poder acceder a Miauff"
             else -> mensaje = "Ocurrio un Error inesperado"
         }
 

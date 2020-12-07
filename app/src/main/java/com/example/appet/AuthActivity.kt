@@ -8,6 +8,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.iid.FirebaseInstanceId
@@ -28,6 +29,8 @@ class AuthActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
+
+
 
         //setup
         setup()
@@ -61,29 +64,37 @@ class AuthActivity : AppCompatActivity() {
         //REGISTRO DE USUARIO CON CORREO Y CONTRASEÑA
         sign_up_button.setOnClickListener {//RECOGER EL EVENTO CUANDO SE EJECUTE
             if (user_login.text.isNotEmpty() && password_login.text.isNotEmpty() && confirmPassword.text.isNotEmpty() && nombre_registro.text.isNotEmpty() && telefono_registro.text.isNotEmpty()) { //COMPROBAR QUE NO SON VACÍAS
-                if(password_login.text.toString().equals(confirmPassword.text.toString())){ //Se debe comparar si el usuario ingreso la misma contraseña, o si cometio un error al digitar
-                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(
-                        user_login.text.toString(),
-                        password_login.text.toString()
-                    ).addOnCompleteListener {//REGISTRO DE USUARIO Y CONTRASEÑA EN FIREBASE
-                        if (it.isSuccessful) {
-                            //showHome(it.result?.user?.email ?: "", ProviderType.BASIC) // PASAR A LA NUEVA PANTALLA,los signos de interrogación son porque el email puede o no existir( Por lo que estas son condiciones por si no existe envíe un string vacío
-                            db.collection("users").document(user_login.text.toString()).set(
-                                hashMapOf("name" to nombre_registro.text.toString(),
-                                    "phone" to telefono_registro.text.toString()
-                                )
-
-                            )
-                            val registro1Intent = Intent(this, Registro1Activity::class.java)
-                            showRegistro(it.result?.user?.email ?: "", ProviderType.BASIC)
-                            //startActivity(registro1Intent)
-                        } else {
-                            showAlert(2) //El usuario ya esta registrado
+                if(password_login.text.length<6){
+                    showAlert(4)
+                }else if(telefono_registro.text.length != 10){
+                    showAlert(5)
+                }
+                else{
+                    if(password_login.text.toString().equals(confirmPassword.text.toString())){ //Se debe comparar si el usuario ingreso la misma contraseña, o si cometio un error al digitar
+                        FirebaseAuth.getInstance().createUserWithEmailAndPassword(
+                            user_login.text.toString(),
+                            password_login.text.toString()
+                        ).addOnCompleteListener {//REGISTRO DE USUARIO Y CONTRASEÑA EN FIREBASE
+                            if (it.isSuccessful) {
+                                //showHome(it.result?.user?.email ?: "", ProviderType.BASIC) // PASAR A LA NUEVA PANTALLA,los signos de interrogación son porque el email puede o no existir( Por lo que estas son condiciones por si no existe envíe un string vacío
+                                db.collection("users").document(user_login.text.toString()).set(
+                                    hashMapOf("name" to nombre_registro.text.toString(),
+                                        "phone" to telefono_registro.text.toString()
+                                    ))
+                                var currentUser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+                                currentUser.sendEmailVerification()
+                                val registro1Intent = Intent(this, Registro1Activity::class.java)
+                                showRegistro(it.result?.user?.email ?: "", ProviderType.BASIC)
+                                //startActivity(registro1Intent)
+                            } else {
+                                showAlert(2) //El usuario ya esta registrado
+                            }
                         }
+                    }else{
+                        showAlert(3) //El usuario cometio un error digitando la contraseña
                     }
-                }else{
-                    showAlert(3) //El usuario cometio un error digitando la contraseña
-            }}else {
+
+                }}else {
                 showAlert(1)  //Si estan vacios los campos
             }
         }
@@ -117,6 +128,8 @@ class AuthActivity : AppCompatActivity() {
             1 -> mensaje = "Existen campos vacios necesarios para registrar su cuenta en Miauff"
             2 -> mensaje = "Usted ya se encuentra registrado en Miauff o ha cometido un error a la hora de digitar sus datos en el proceso de registro"
             3 -> mensaje = "Las contraseñas no coinciden, intente nuevamente"
+            4 -> mensaje = "La contraseña debe tener 6 caracteres como mínimo"
+            5 -> mensaje = "El télefono debe tener 10 números"
             else -> mensaje = "Ocurrio un Error inesperado"
         }
 
