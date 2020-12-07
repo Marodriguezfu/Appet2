@@ -76,7 +76,7 @@ Los atributos de esta clase son las caracteristicas principales de una mascota, 
 
 ```Gato``` es una clase que hereda de ```Mascota``` cuenta ademas con los atributos referentes a la vacunación de un gato. Se implementa el método abstracto ```saveInformation()``` permitiendo almacenar en la base de datos de Firebase del proyecto toda la información del perro al llamar el método ```savePrincipalInfo( tipoPet:String)``` dentro del método con el parámetro ```"Gato"```. A continuación se muestra este método.
 
-```
+``` kotlin
     /**
      * Envia los atributos de un obbjeto de la clase gato
      * a una base de datos de Firebase
