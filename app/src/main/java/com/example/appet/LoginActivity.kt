@@ -68,7 +68,8 @@ class LoginActivity : AppCompatActivity() {
             if (user_login.text.isNotEmpty() && password_login.text.isNotEmpty()) {
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(user_login.text.toString(),password_login.text.toString()).addOnCompleteListener {
                     if (it.isSuccessful) {
-                        showHome(it.result?.user?.email ?: "", ProviderType.BASIC) //los signos de interrogación son porque el email puede o no existir( Por lo que estas son condiciones por si no existe envíe un string vacío
+                        //showHome(it.result?.user?.email ?: "", ProviderType.BASIC) //los signos de interrogación son porque el email puede o no existir( Por lo que estas son condiciones por si no existe envíe un string vacío
+                        showFoto(it.result?.user?.email ?: "", ProviderType.BASIC)
                     }else {
                         showAlert(2) //SI NO SE REGISTRA CREA UNA ALERTA
                     }
@@ -124,6 +125,17 @@ class LoginActivity : AppCompatActivity() {
             putExtra("provider", provider.name) //PASARLE EL PROVEEDOR A LA NUEVA PANTALLA
         }
         startActivity(homeIntent) //LA NAVEGACION A LA NUEVA PANTALLA
+        finish()
+    }
+
+    private fun showFoto(email: String, provider: ProviderType) {
+        // IR A HOME
+        val fotoIntent = Intent(this, RegistroFotoActivity::class.java).apply {    //CREAR UN INTENT A LA NUEVA PANTALLA Y NAVEGAR A LA NUEVA PANTALLA
+            //PARAMETROS A PASAR
+            putExtra("email", email) //PASARLE EL EMAIL A LA NUEVA PANTALLA
+            putExtra("provider", provider.name) //PASARLE EL PROVEEDOR A LA NUEVA PANTALLA
+        }
+        startActivity(fotoIntent) //LA NAVEGACION A LA NUEVA PANTALLA
         finish()
     }
 
