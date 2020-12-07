@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
@@ -64,8 +66,14 @@ class HomeActivity : AppCompatActivity() {
     }
 
     /**
-     * Liseteners para cada ietm en el menu de la barra de la app
+     * Configuración menu de la barra de app
      */
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.topbar_menu, menu)
+        return true
+    }
+    //Liseteners para cada ietm en el menu de la barra de la app
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.mascotas_opt ->{
