@@ -195,10 +195,20 @@ class RegistroVacunasActivity : AppCompatActivity() {
         )
     }
 
+    /**
+     * Muestra el cuadro de dialogo con la configuración establecida.
+     *
+     * @param parent permite al programa conocer quien llamo a la función.
+     */
     private fun showDatePickerDialog(parent: EditText) {
         val datePicker = DatePickerFragment { day, month, year -> onDateSelected(day, month, year, parent) }
         datePicker.show(supportFragmentManager, "datePicker")
     }
+
+    /**
+     * Organiza la información recogida sobre las fechas de
+     * vacunación de las mascotas.
+     */
     private fun onDateSelected(day: Int, month: Int, year: Int, parent: EditText) {
         diaObtenido = day
         mesObtenido = month

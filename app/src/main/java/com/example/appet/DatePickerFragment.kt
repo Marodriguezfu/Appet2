@@ -8,6 +8,15 @@ import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
 import java.util.*
 
+/**
+ *Selección de fechas.
+ *
+ * Esta clase se encarga de la diagramación de cuadros de textos que
+ * permitan facilitar al usuario la elección de fechas.
+ *
+ * @constructor Crea un fragment para la selección de fechas con la
+ * información necesaria.
+ */
 class DatePickerFragment(val listener: (day: Int, month: Int, year: Int) -> Unit) :
     DialogFragment(), DatePickerDialog.OnDateSetListener {
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {

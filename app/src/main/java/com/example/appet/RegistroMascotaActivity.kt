@@ -213,6 +213,13 @@ class RegistroMascotaActivity : AppCompatActivity(), AdapterView.OnItemSelectedL
         return sexo
     }
 
+    /**
+     * Crea un arreglo con la información necesaria para el spinner.
+     *
+     * @param tipoPet cadena que explica el tipo de mascota del usuario.
+     * @return un arreglo de [String] con las razas del tipo de mascotas
+     * seleccionado por el usuario.
+     */
     private fun arrayRaza(tipoPet:String?): ArrayList<String> {
         val razas = arrayListOf<String>() //Creamos el array de razas de mascota
         if(tipoPet.equals("Perro")){
@@ -272,6 +279,11 @@ class RegistroMascotaActivity : AppCompatActivity(), AdapterView.OnItemSelectedL
         return razas
     }
 
+    /**
+     * Crea un arreglo con la información necesaria para el spinner.
+     *
+     * @return un arreglo de [String] con los colores de pelo de las mascotas.
+     */
     private fun arrayColor(): ArrayList<String> {
         val coloresAr = arrayListOf<String>() //Creamos el array de colores de mascota
         coloresAr.addAll(listOf("Seleccionar el color del pelo de la mascota","Amarillo","Blanco", "Blanco/Cafe", "Blanco/Gris", "Blanco/Naranja", "Blanco/Negro", "Cafe","Dorada",
@@ -280,6 +292,9 @@ class RegistroMascotaActivity : AppCompatActivity(), AdapterView.OnItemSelectedL
     }
 
 
+    /**
+     * Inicia la actividad RegistroVacunas
+     */
     private fun showVacunas(email: String, provider: String,datos: Map<String, String>) {
         val vacunasIntent = Intent(this, RegistroVacunasActivity::class.java).apply {    //CREAR UN INTENT A LA NUEVA PANTALLA Y NAVEGAR A LA NUEVA PANTALLA
             //PARAMETROS A PASAR
