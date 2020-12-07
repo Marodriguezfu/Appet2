@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import kotlinx.android.synthetic.main.activity_registro1.*
@@ -33,7 +34,7 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
         var provider = bundle?.getString("provider")//Se accede al map en donde se almacenan los datos
 
         departamento = "Seleccionar Departamento";
-        ciudad = "Seleccione"
+        ciudad = "Seleccione su municipio"
         spinnerCiudadMunicipio.setVisibility(View.INVISIBLE)
         spinner = findViewById(R.id.spinnerDepto) //Accedemos al Spinner que hicimos en el archivo xml con la ayuda de su id
         result = findViewById(R.id.resultText)//Esta linea debe ser eliminada, solo se utiliza para mostrar que si se esta seleccionando el departamento
@@ -46,21 +47,27 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
 
             //Llamamos la actividad Registro 2
             //showRegistro2(departamento)
+            if(departamento.equals("Seleccionar Departamento")){
+                showAlert(1)
+            }else if(ciudad.equals("Seleccione su municipio")||ciudad.equals("Seleccione su localidad")){
+                showAlert(2)
+            }else{
+                val data = hashMapOf("provider" to "BASIC", "departamento" to departamento, "municipio" to ciudad )
+                db.collection("users").document(email ?: "").set(
+                    data , SetOptions.merge()
+                )
+                showMascota(email ?: "" , "BASIC")
+                //showMascota()
+                //val textooculto = findViewById(R.id.ciudadMunicipioText)
 
 
-            val data = hashMapOf("provider" to "BASIC", "departamento" to departamento, "municipio" to ciudad )
-            db.collection("users").document(email ?: "").set(
-               data , SetOptions.merge()
-            )
-            showMascota(email ?: "" , "BASIC")
-            //showMascota()
-            //val textooculto = findViewById(R.id.ciudadMunicipioText)
+
+                /* TextView view = (TextView) findViewById(R.id.textView);
+                 view.setText("Add your text here");
+                 view.setVisibility(View.VISIBLE);*/
+            }
 
 
-
-           /* TextView view = (TextView) findViewById(R.id.textView);
-            view.setText("Add your text here");
-            view.setVisibility(View.VISIBLE);*/
         }
 
 
@@ -100,6 +107,28 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
     }
 
     /**
+     * Muestra un cuadro de alerta amigable cuando el usuario comete un error.
+     *
+     * @param caso número que reconoce el error cometido por el usuario.
+     */
+    private fun showAlert(caso: Int){
+
+        var mensaje: String;
+        when (caso) {
+            1 -> mensaje = "Debe seleccionar su departamento para poder continuar"
+            2 -> mensaje = "Debe seleccionar su municipio o localidad para poder continuar"
+            else -> mensaje = "Ocurrio un Error inesperado"
+        }
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Error")
+        builder.setMessage(mensaje)
+        builder.setPositiveButton("Aceptar", null)
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    /**
      * Crea el arreglo de departamentos Colombiano.
      *
      * @return Un ArrayList de [String] con el nombre de los
@@ -128,12 +157,12 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
     private fun arrayCity(departamento:String?): ArrayList<String> {
         val ciudades = arrayListOf<String>() //Creamos el array de ciudades del departamento de Colombia
         if(departamento.equals("Seleccionar Departamento")){
-            ciudades.addAll(listOf("Seleccion"))
+            ciudades.addAll(listOf("Seleccione su municipio"))
         }
         else if(departamento.equals("Amazonas")){
-            ciudades.addAll(listOf("Leticia","Puerto Nariño","Abriaqu\u00ed"))
+            ciudades.addAll(listOf("Seleccione su municipio","Leticia","Puerto Nariño","Abriaqu\u00ed"))
         }else if (departamento.equals("Antioquia")){
-            ciudades.addAll(listOf("Abejorral", "Abriaqu\u00ed", "Alejandr\u00eda", "Amag\u00e1",
+            ciudades.addAll(listOf("Seleccione su municipio", "Abejorral", "Abriaqu\u00ed", "Alejandr\u00eda", "Amag\u00e1",
                 "Amalfi", "Andes", "Angel\u00f3polis", "Angostura", "Anor\u00ed", "Anz\u00e1",
                 "Apartad\u00f3", "Arboletes", "Argelia", "Armenia", "Barbosa", "Bello", "Belmira",
                 "Betania", "Betulia", "Brice\u00f1o", "Buritic\u00e1", "C\u00e1ceres", "Caicedo",
@@ -154,23 +183,23 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
                 "Turbo", "Uramita", "Urrao", "Valdivia", "Valpara\u00edso", "Vegach\u00ed", "Venecia", "Vig\u00eda del Fuerte",
                 "Yal\u00ed", "Yarumal", "Yolomb\u00f3", "Yond\u00f3", "Zaragoza"))
         }else if (departamento.equals("Arauca")){
-            ciudades.addAll(listOf("Arauca", "Arauquita",
+            ciudades.addAll(listOf("Seleccione su municipio", "Arauca", "Arauquita",
                 "Cravo Norte", "Fortul", "Puerto Rond\u00f3n",
                 "Saravena", "Tame"))
         }else if (departamento.equals("Atlántico")){
-            ciudades.addAll(listOf("Baranoa", "Barranquilla", "Campo de la Cruz",
+            ciudades.addAll(listOf("Seleccione su municipio", "Baranoa", "Barranquilla", "Campo de la Cruz",
                 "Candelaria", "Galapa", "Juan de Acosta", "Luruaco", "Malambo",
                 "Manat\u00ed", "Palmar de Varela", "Pioj\u00f3", "Polonuevo",
                 "Ponedera", "Puerto Colombia", "Repel\u00f3n", "Sabanagrande",
                 "Sabanalarga", "Santa Luc\u00eda", "Santo Tom\u00e1s", "Soledad",
                 "Su\u00e1n", "Tubar\u00e1", "Usiacur\u00ed"))
         }else if (departamento.equals("Bogotá")){
-            ciudades.addAll(listOf("Antonio Nariño","Barrios Unidos", "Bosa", "Chapinero",
+            ciudades.addAll(listOf("Seleccione su localidad", "Antonio Nariño","Barrios Unidos", "Bosa", "Chapinero",
                 "Ciuadad Bolívar", "Engativá", "Fontibón", "Kennedy", "La Candelaria", "Los mártires",
                 "Puente Aranda", "Rafael Uribe Uribe", "San Cristóbal", "Santa Fe", "Suba",
                 "Sumapaz", "Teusaquillo", "Tunjuelito", "Usaquén", "Usme"))
         }else if (departamento.equals("Bolívar")){
-            ciudades.addAll(listOf("Ach\u00ed", "Altos del Rosario", "Arenal", "Arjona", "Arroyohondo",
+            ciudades.addAll(listOf("Seleccione su municipio", "Ach\u00ed", "Altos del Rosario", "Arenal", "Arjona", "Arroyohondo",
                 "Barranco de Loba", "Brazuelo de Papayal", "Calamar", "Cantagallo", "Cartagena de Indias",
                 "Cicuco", "Clemencia", "C\u00f3rdoba", "El Carmen de Bol\u00edvar", "El Guamo", "El Pe\u00f1\u00f3n",
                 "Hatillo de Loba", "Magangu\u00e9", "Mahates", "Margarita", "Mar\u00eda la Baja", "Momp\u00f3s",
@@ -179,7 +208,7 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
                 "San Pablo", "Santa Catalina", "Santa Rosa", "Santa Rosa del Sur", "Simit\u00ed", "Soplaviento",
                 "Talaigua Nuevo", "Tiquisio", "Turbaco", "Turban\u00e1", "Villanueva", "Zambrano"))
         }else if (departamento.equals("Boyacá")){
-            ciudades.addAll(listOf("Almeida", "Aquitania", "Arcabuco", "Bel\u00e9n", "Berbeo", "Bet\u00e9itiva",
+            ciudades.addAll(listOf("Seleccione su municipio", "Almeida", "Aquitania", "Arcabuco", "Bel\u00e9n", "Berbeo", "Bet\u00e9itiva",
                 "Boavita", "Boyac\u00e1", "Brice\u00f1o", "Buenavista", "Busbanz\u00e1", "Caldas", "Campohermoso",
                 "Cerinza", "Chinavita", "Chiquinquir\u00e1", "Ch\u00edquiza", "Chiscas", "Chita", "Chitaraque", "Chivat\u00e1",
                 "Chivor", "Ci\u00e9nega", "C\u00f3mbita", "Coper", "Corrales", "Covarach\u00eda", "Cubar\u00e1", "Cucaita",
@@ -197,25 +226,25 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
                 "Tunungu\u00e1", "Turmequ\u00e9", "Tuta", "Tutaz\u00e1", "\u00dambita", "Ventaquemada", "Villa de Leyva",
                 "Viracach\u00e1", "Zetaquira"))
         }else if (departamento.equals("Caldas")){
-            ciudades.addAll(listOf("Aguadas", "Anserma", "Aranzazu", "Belalc\u00e1zar",
+            ciudades.addAll(listOf("Seleccione su municipio", "Aguadas", "Anserma", "Aranzazu", "Belalc\u00e1zar",
                 "Chinchin\u00e1", "Filadelfia", "La Dorada", "La Merced", "Manizales",
                 "Manzanares", "Marmato", "Marquetalia", "Marulanda", "Neira", "Norcasia",
                 "P\u00e1cora", "Palestina", "Pensilvania", "Riosucio", "Risaralda", "Salamina",
                 "Saman\u00e1", "San Jos\u00e9", "Sup\u00eda", "Victoria", "Villamar\u00eda",
                 "Viterbo"))
         }else if (departamento.equals("Caquetá")){
-            ciudades.addAll(listOf("Albania", "Bel\u00e9n de los Andaqu\u00edes",
+            ciudades.addAll(listOf("Seleccione su municipio", "Albania", "Bel\u00e9n de los Andaqu\u00edes",
                 "Cartagena del Chair\u00e1", "Curillo", "El Doncello", "El Paujil",
                 "Florencia", "La Monta\u00f1ita", "Mil\u00e1n", "Morelia",
                 "Puerto Rico", "San Jos\u00e9 del Fragua", "San Vicente del Cagu\u00e1n",
                 "Solano", "Solita", "Valpara\u00edso"))
         }else if (departamento.equals("Casanare")){
-            ciudades.addAll(listOf("Aguazul", "Ch\u00e1meza", "Hato Corozal", "La Salina",
+            ciudades.addAll(listOf("Seleccione su municipio", "Aguazul", "Ch\u00e1meza", "Hato Corozal", "La Salina",
                 "Man\u00ed", "Monterrey", "Nunch\u00eda", "Orocu\u00e9", "Paz de Ariporo",
                 "Pore", "Recetor", "Sabanalarga", "S\u00e1cama", "San Luis de Palenque",
                 "T\u00e1mara", "Tauramena", "Trinidad", "Villanueva", "Yopal"))
         }else if (departamento.equals("Cauca")){
-            ciudades.addAll(listOf("Almaguer", "Argelia", "Balboa", "Bol\u00edvar",
+            ciudades.addAll(listOf("Seleccione su municipio", "Almaguer", "Argelia", "Balboa", "Bol\u00edvar",
                 "Buenos Aires", "Cajib\u00edo", "Caldono", "Caloto", "Corinto",
                 "El Tambo", "Florencia", "Guachen\u00e9", "Guap\u00ed", "Inz\u00e1",
                 "Jambal\u00f3", "La Sierra", "La Vega", "L\u00f3pez de Micay",
@@ -225,28 +254,28 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
                 "Silvia", "Sotar\u00e1", "Su\u00e1rez", "Sucre", "Timb\u00edo",
                 "Timbiqu\u00ed", "Torib\u00edo", "Totor\u00f3", "Villa Rica"))
         }else if (departamento.equals("Cesar")){
-            ciudades.addAll(listOf("Aguachica", "Agust\u00edn Codazzi", "Astrea",
+            ciudades.addAll(listOf("Seleccione su municipio", "Aguachica", "Agust\u00edn Codazzi", "Astrea",
                 "Becerril", "Bosconia", "Chimichagua", "Chiriguan\u00e1", "Curuman\u00ed",
                 "El Copey", "El Paso", "Gamarra", "Gonz\u00e1lez", "La Gloria",
                 "La Jagua de Ibirico", "La Paz", "Manaure Balc\u00f3n del Cesar",
                 "Pailitas", "Pelaya", "Pueblo Bello", "R\u00edo de Oro", "San Alberto",
                 "San Diego", "San Mart\u00edn", "Tamalameque", "Valledupar"))
         }else if (departamento.equals("Chocó")){
-            ciudades.addAll(listOf("Acand\u00ed", "Alto Baud\u00f3", "Bagad\u00f3",
+            ciudades.addAll(listOf("Seleccione su municipio", "Acand\u00ed", "Alto Baud\u00f3", "Bagad\u00f3",
                 "Bah\u00eda Solano", "Bajo Baud\u00f3", "Bojay\u00e1", "Cant\u00f3n de San Pablo",
                 "C\u00e9rtegui", "Condoto", "El Atrato", "El Carmen de Atrato", "El Carmen del Dari\u00e9n",
                 "Istmina", "Jurad\u00f3", "Litoral de San Juan", "Llor\u00f3", "Medio Atrato", "Medio Baud\u00f3",
                 "Medio San Juan", "N\u00f3vita", "Nuqu\u00ed", "Quibd\u00f3", "R\u00edo Ir\u00f3", "R\u00edo Quito",
                 "Riosucio", "San Jos\u00e9 del Palmar", "Sip\u00ed", "Tad\u00f3", "Uni\u00f3n Panamericana", "Ungu\u00eda"))
         }else if (departamento.equals("Córdoba")){
-            ciudades.addAll(listOf("Ayapel", "Buenavista", "Canalete", "Ceret\u00e9", "Chim\u00e1",
+            ciudades.addAll(listOf("Seleccione su municipio", "Ayapel", "Buenavista", "Canalete", "Ceret\u00e9", "Chim\u00e1",
                 "Chin\u00fa", "Ci\u00e9naga de Oro", "Cotorra", "La Apartada", "Lorica", "Los C\u00f3rdobas",
                 "Momil", "Montel\u00edbano", "Monter\u00eda", "Mo\u00f1itos", "Planeta Rica", "Pueblo Nuevo",
                 "Puerto Escondido", "Puerto Libertador", "Pur\u00edsima", "Sahag\u00fan", "San Andr\u00e9s de Sotavento",
                 "San Antero", "San Bernardo del Viento", "San Carlos", "San Jos\u00e9 de Ur\u00e9", "San Pelayo", "Tierralta",
                 "Tuch\u00edn", "Valencia"))
         }else if (departamento.equals("Cundinamarca")){
-            ciudades.addAll(listOf(            "Agua de Dios", "Alb\u00e1n", "Anapoima", "Anolaima", "Apulo",
+            ciudades.addAll(listOf( "Seleccione su municipio", "Agua de Dios", "Alb\u00e1n", "Anapoima", "Anolaima", "Apulo",
                 "Arbel\u00e1ez", "Beltr\u00e1n", "Bituima", "Bojac\u00e1", "Cabrera", "Cachipay", "Cajic\u00e1",
                 "Caparrap\u00ed", "C\u00e1queza", "Carmen de Carupa", "Chaguan\u00ed", "Ch\u00eda", "Chipaque",
                 "Choach\u00ed", "Chocont\u00e1", "Cogua", "Cota", "Cucunub\u00e1", "El Colegio", "El Pe\u00f1\u00f3n", "El Rosal",
@@ -264,33 +293,33 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
         }else if (departamento.equals("Guainía")){
             ciudades.addAll(listOf("In\u00edrida"))
         }else if (departamento.equals("Guaviare")){
-            ciudades.addAll(listOf("Calamar", "El Retorno", "Miraflores", "San Jos\u00e9 del Guaviare"))
+            ciudades.addAll(listOf("Seleccione su municipio", "Calamar", "El Retorno", "Miraflores", "San Jos\u00e9 del Guaviare"))
         }else if (departamento.equals("Huila")){
-            ciudades.addAll(listOf("Acevedo", "Agrado", "Aipe", "Algeciras", "Altamira",
+            ciudades.addAll(listOf("Seleccione su municipio", "Acevedo", "Agrado", "Aipe", "Algeciras", "Altamira",
                 "Baraya", "Campoalegre", "Colombia", "El Pital", "El\u00edas", "Garz\u00f3n",
                 "Gigante", "Guadalupe", "Hobo", "\u00cdquira", "Isnos", "La Argentina",
                 "La Plata", "N\u00e1taga", "Neiva", "Oporapa", "Paicol", "Palermo", "Palestina",
                 "Pitalito", "Rivera", "Saladoblanco", "San Agust\u00edn", "Santa Mar\u00eda", "Suaza",
                 "Tarqui", "Tello", "Teruel", "Tesalia", "Timan\u00e1", "Villavieja", "Yaguar\u00e1"))
         }else if (departamento.equals("La Guajira")){
-            ciudades.addAll(listOf("Albania", "Barrancas", "Dibulla", "Distracci\u00f3n",
+            ciudades.addAll(listOf("Seleccione su municipio", "Albania", "Barrancas", "Dibulla", "Distracci\u00f3n",
                 "El Molino", "Fonseca", "Hatonuevo", "La Jagua del Pilar", "Maicao",
                 "Manaure", "Riohacha", "San Juan del Cesar", "Uribia", "Urumita", "Villanueva"))
         }else if (departamento.equals("Magdalena")){
-            ciudades.addAll(listOf("Algarrobo", "Aracataca", "Ariguan\u00ed", "Cerro de San Antonio",
+            ciudades.addAll(listOf("Seleccione su municipio", "Algarrobo", "Aracataca", "Ariguan\u00ed", "Cerro de San Antonio",
                 "Chibolo", "Ci\u00e9naga", "Concordia", "El Banco", "El Pi\u00f1\u00f3n", "El Ret\u00e9n",
                 "Fundaci\u00f3n", "Guamal", "Nueva Granada", "Pedraza", "Piji\u00f1o del Carmen", "Pivijay",
                 "Plato", "Pueblo Viejo", "Remolino", "Sabanas de San \u00c1ngel", "Salamina", "San Sebasti\u00e1n de Buenavista",
                 "San Zen\u00f3n", "Santa Ana", "Santa B\u00e1rbara de Pinto", "Santa Marta", "Sitionuevo", "Tenerife",
                 "Zapay\u00e1n", "Zona Bananera"))
         }else if (departamento.equals("Meta")){
-            ciudades.addAll(listOf("Acac\u00edas", "Barranca de Up\u00eda", "Cabuyaro", "Castilla la Nueva",
+            ciudades.addAll(listOf("Seleccione su municipio", "Acac\u00edas", "Barranca de Up\u00eda", "Cabuyaro", "Castilla la Nueva",
                 "Cubarral", "Cumaral", "El Calvario", "El Castillo", "El Dorado", "Fuente de Oro",
                 "Granada", "Guamal", "La Macarena", "La Uribe", "Lejan\u00edas", "Mapirip\u00e1n", "Mesetas",
                 "Puerto Concordia", "Puerto Gait\u00e1n", "Puerto Lleras", "Puerto L\u00f3pez", "Puerto Rico", "Restrepo",
                 "San Carlos de Guaroa", "San Juan de Arama", "San Juanito", "San Mart\u00edn", "Villavicencio", "Vista Hermosa"))
         }else if (departamento.equals("Nariño")){
-            ciudades.addAll(listOf("Aldana", "Ancuy\u00e1", "Arboleda", "Barbacoas", "Bel\u00e9n", "Buesaco",
+            ciudades.addAll(listOf("Seleccione su municipio", "Aldana", "Ancuy\u00e1", "Arboleda", "Barbacoas", "Bel\u00e9n", "Buesaco",
                 "Chachag\u00fc\u00ed", "Col\u00f3n", "Consac\u00e1", "Contadero", "C\u00f3rdoba", "Cuaspud", "Cumbal",
                 "Cumbitara", "El Charco", "El Pe\u00f1ol", "El Rosario", "El Tabl\u00f3n", "El Tambo", "Francisco Pizarro",
                 "Funes", "Guachucal", "Guaitarilla", "Gualmat\u00e1n", "Iles", "Imu\u00e9s", "Ipiales", "La Cruz",
@@ -300,7 +329,7 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
                 "San Jos\u00e9 de Alb\u00e1n", "San Lorenzo", "San Pablo", "San Pedro de Cartago", "Sandon\u00e1", "Santa B\u00e1rbara", "Santacruz", "Sapuyes",
                 "Taminango", "Tangua", "Tumaco", "T\u00faquerres", "Yacuanquer"))
         }else if (departamento.equals("Norte de Santander")){
-            ciudades.addAll(listOf("\u00c1brego", "Arboledas", "Bochalema", "Bucarasica", "C\u00e1chira",
+            ciudades.addAll(listOf("Seleccione su municipio", "\u00c1brego", "Arboledas", "Bochalema", "Bucarasica", "C\u00e1chira",
                 "C\u00e1cota", "Chin\u00e1cota", "Chitag\u00e1", "Convenci\u00f3n", "C\u00facuta", "Cucutilla",
                 "Duran\u00eda", "El Carmen", "El Tarra", "El Zulia", "Gramalote", "Hacar\u00ed", "Herr\u00e1n",
                 "La Esperanza", "La Playa de Bel\u00e9n", "Labateca", "Los Patios", "Lourdes", "Mutiscua",
@@ -308,21 +337,21 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
                 "San Cayetano", "Santiago", "Santo Domingo de Silos", "Sardinata", "Teorama", "Tib\u00fa", "Toledo",
                 "Villa Caro", "Villa del Rosario"))
         }else if (departamento.equals("Putumayo")){
-            ciudades.addAll(listOf("Col\u00f3n", "Mocoa", "Orito", "Puerto As\u00eds", "Puerto Caicedo",
+            ciudades.addAll(listOf("Seleccione su municipio", "Col\u00f3n", "Mocoa", "Orito", "Puerto As\u00eds", "Puerto Caicedo",
                 "Puerto Guzm\u00e1n", "Puerto Legu\u00edzamo", "San Francisco", "San Miguel", "Santiago",
                 "Sibundoy", "Valle del Guamuez", "Villagarz\u00f3n"))
         }else if (departamento.equals("Quindío")){
-            ciudades.addAll(listOf("Armenia", "Buenavista", "Calarc\u00e1", "Circasia",
+            ciudades.addAll(listOf("Seleccione su municipio", "Armenia", "Buenavista", "Calarc\u00e1", "Circasia",
                 "C\u00f3rdoba", "Filandia", "G\u00e9nova", "La Tebaida",
                 "Montenegro", "Pijao", "Quimbaya", "Salento"))
         }else if (departamento.equals("Risaralda")){
-            ciudades.addAll(listOf("Ap\u00eda", "Balboa", "Bel\u00e9n de Umbr\u00eda", "Dosquebradas",
+            ciudades.addAll(listOf("Seleccione su municipio", "Ap\u00eda", "Balboa", "Bel\u00e9n de Umbr\u00eda", "Dosquebradas",
                 "Gu\u00e1tica", "La Celia", "La Virginia", "Marsella", "Mistrat\u00f3", "Pereira",
                 "Pueblo Rico", "Quinch\u00eda", "Santa Rosa de Cabal", "Santuario"))
         }else if (departamento.equals("San Andrés y Providencia")){
-            ciudades.addAll(listOf("Providencia y Santa Catalina Islas", "San Andr\u00e9s"))
+            ciudades.addAll(listOf("Seleccione su municipio", "Providencia y Santa Catalina Islas", "San Andr\u00e9s"))
         }else if (departamento.equals("Santander")){
-            ciudades.addAll(listOf("Aguada", "Albania", "Aratoca", "Barbosa", "Barichara", "Barrancabermeja",
+            ciudades.addAll(listOf("Seleccione su municipio", "Aguada", "Albania", "Aratoca", "Barbosa", "Barichara", "Barrancabermeja",
                 "Betulia", "Bol\u00edvar", "Bucaramanga", "Cabrera", "California", "Capitanejo", "Carcas\u00ed",
                 "Cepit\u00e1", "Cerrito", "Charal\u00e1", "Charta", "Chima", "Chipat\u00e1", "Cimitarra", "Concepci\u00f3n",
                 "Confines", "Contrataci\u00f3n", "Coromoro", "Curit\u00ed", "El Carmen de Chucur\u00ed", "El Guacamayo",
@@ -337,13 +366,13 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
                 "Tona", "Valle de San Jos\u00e9", "V\u00e9lez", "Vetas",
                 "Villanueva", "Zapatoca"))
         }else if (departamento.equals("Sucre")){
-            ciudades.addAll(listOf("Buenavista", "Caimito", "Chal\u00e1n", "Colos\u00f3", "Corozal",
+            ciudades.addAll(listOf("Seleccione su municipio", "Buenavista", "Caimito", "Chal\u00e1n", "Colos\u00f3", "Corozal",
                 "Cove\u00f1as", "El Roble", "Galeras", "Guaranda", "La Uni\u00f3n", "Los Palmitos",
                 "Majagual", "Morroa", "Ovejas", "Sampu\u00e9s", "San Antonio de Palmito", "San Benito Abad",
                 "San Juan de Betulia", "San Marcos", "San Onofre", "San Pedro", "Sinc\u00e9", "Sincelejo",
                 "Sucre", "Tol\u00fa", "Tol\u00fa Viejo"))
         }else if (departamento.equals("Tolima")){
-            ciudades.addAll(listOf("Alpujarra", "Alvarado", "Ambalema", "Anzo\u00e1tegui", "Armero",
+            ciudades.addAll(listOf("Seleccione su municipio", "Alpujarra", "Alvarado", "Ambalema", "Anzo\u00e1tegui", "Armero",
                 "Ataco", "Cajamarca", "Carmen de Apical\u00e1", "Casabianca", "Chaparral", "Coello",
                 "Coyaima", "Cunday", "Dolores", "El Espinal", "Fal\u00e1n", "Flandes", "Fresno",
                 "Guamo", "Herveo", "Honda", "Ibagu\u00e9", "Icononzo", "L\u00e9rida", "L\u00edbano", "Mariquita",
@@ -351,16 +380,16 @@ class Registro1Activity : AppCompatActivity() , AdapterView.OnItemSelectedListen
                 "Purificaci\u00f3n", "Rioblanco", "Roncesvalles", "Rovira", "Salda\u00f1a", "San Antonio",
                 "San Luis", "Santa Isabel", "Su\u00e1rez", "Valle de San Juan", "Venadillo", "Villahermosa", "Villarrica"))
         }else if (departamento.equals("Valle del Cauca")){
-            ciudades.addAll(listOf("Alcal\u00e1", "Andaluc\u00eda", "Ansermanuevo", "Argelia", "Bol\u00edvar",
+            ciudades.addAll(listOf("Seleccione su municipio", "Alcal\u00e1", "Andaluc\u00eda", "Ansermanuevo", "Argelia", "Bol\u00edvar",
                 "Buenaventura", "Buga", "Bugalagrande", "Caicedonia", "Cali", "Calima", "Candelaria", "Cartago",
                 "Dagua", "El \u00c1guila", "El Cairo", "El Cerrito", "El Dovio", "Florida", "Ginebra", "Guacar\u00ed",
                 "Jamund\u00ed", "La Cumbre", "La Uni\u00f3n", "La Victoria", "Obando", "Palmira", "Pradera", "Restrepo",
                 "Riofr\u00edo", "Roldanillo", "San Pedro", "Sevilla", "Toro", "Trujillo", "Tulu\u00e1", "Ulloa", "Versalles",
                 "Vijes", "Yotoco", "Yumbo", "Zarzal"))
         }else if (departamento.equals("Vaupés")){
-            ciudades.addAll(listOf("Carur\u00fa", "Mit\u00fa", "Taraira"))
+            ciudades.addAll(listOf("Seleccione su municipio", "Carur\u00fa", "Mit\u00fa", "Taraira"))
         }else if (departamento.equals("Vichada")){
-            ciudades.addAll(listOf("Cumaribo", "La Primavera", "Puerto Carre\u00f1o", "Santa Rosal\u00eda"))
+            ciudades.addAll(listOf("Seleccione su municipio", "Cumaribo", "La Primavera", "Puerto Carre\u00f1o", "Santa Rosal\u00eda"))
         }
         return ciudades
     }
