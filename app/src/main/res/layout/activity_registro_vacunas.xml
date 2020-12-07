@@ -196,7 +196,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="136dp"
         android:layout_marginBottom="90dp"
-        android:text="¿Tienes mas peludos?"
+        android:text="¿Deseas agregar más peludos?"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

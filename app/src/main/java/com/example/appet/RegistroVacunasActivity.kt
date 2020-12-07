@@ -130,6 +130,10 @@ class RegistroVacunasActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Guarda la infomación obtenida del usuario en un objeto del tipo necesitado
+     * y sube esta información a la base de datos de Firebase.
+     */
     private fun saveDataPet(){
         if(tipoMascotaP == "Perro"){
             moquillo = numberVacuna1.text.toString()
@@ -271,7 +275,7 @@ class RegistroVacunasActivity : AppCompatActivity() {
     }
 
     /**
-     * Inicia la actividad RegistroMascota
+     * Inicia la actividad RegistroFoto
      */
     private fun showFoto(email: String, provider: String) {
         // IR A HOME

@@ -191,13 +191,22 @@ class RegistroMascotaActivity : AppCompatActivity(), AdapterView.OnItemSelectedL
     }
 
 
-
+    /**
+     * Crea un arreglo con la información necesaria para el spinner.
+     *
+     * @return un arreglo de [String] con las clases de mascotas de la app.
+     */
     private fun arrayTipoMascota(): ArrayList<String> {
         val tipoPet = arrayListOf<String>() //Creamos el array de tipos de mascotas
         tipoPet.addAll(listOf("Seleccionar la mascota","Gato","Perro"))
         return tipoPet
     }
 
+    /**
+     * Crea un arreglo con la información necesaria para el spinner.
+     *
+     * @return un arreglo de [String] con los sexos de las mascotas.
+     */
     private fun arraySexo(): ArrayList<String> {
         val sexo = arrayListOf<String>() //Creamos el array de sexos de mascota
         sexo.addAll(listOf("Seleccionar el sexo de la mascota","Hembra","Macho"))
