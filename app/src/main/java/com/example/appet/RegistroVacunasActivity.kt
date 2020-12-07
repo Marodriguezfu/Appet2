@@ -16,12 +16,11 @@ class RegistroVacunasActivity : AppCompatActivity() {
     private var fechaDeNacimiento = ""
     private var guardado = false
 
-
-
     val date = Calendar.getInstance().time
     val formatter = SimpleDateFormat.getDateTimeInstance() //or use getDateInstance()
     val sdf = SimpleDateFormat("yyyy/MM/dd")
     var formatedDate = sdf.format(date)
+    var tipoMascotaP = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,31 +32,47 @@ class RegistroVacunasActivity : AppCompatActivity() {
         val bundle = intent.extras //RECUPERAR LOS PARAMETROS
 
         val nombre =  bundle?.getString("nombreMascota")
+        val tipoMascota =  bundle?.getString("tipoMascota")
+        tipoMascotaP = tipoMascota ?: ""
+        if(tipoMascota == "Perro") {
+            dateVacuna1.setText("Moquillo")
+            dateVacuna2.setText("Hepatitis")
+            dateVacuna3.setText("Parvovirosis")
+            dateVacuna4.setText("Leptospirosis")
+            dateVacuna5.setText("Rabia")
+        }
+        else{
+            dateVacuna1.setText("Leucemia")
+            dateVacuna2.setText("Rinotraqueitis")
+            dateVacuna3.setText("Panleucopenia")
+            dateVacuna4.setText("Calcivirosis")
+            dateVacuna5.setText("Rabia")
+        }
+
         println("El patas es: $nombre")
 
         dateCumpleaños.setOnClickListener{
             showDatePickerDialog(dateCumpleaños)
-           // etDate.setText(diaObtenido.toString()+"/"+mesObtenido.toString()+"/"+añoObtenido.toString())
         }
         dateVacuna1.setOnClickListener{
+            it.setBackgroundColor(0xFF4CAF50.toInt())
             showDatePickerDialog(dateVacuna1)
-           // pickDateBtn.setText (diaObtenido.toString()+"/"+mesObtenido.toString()+"/"+añoObtenido.toString())
         }
         dateVacuna2.setOnClickListener{
+            it.setBackgroundColor(0xFF4CAF50.toInt())
             showDatePickerDialog(dateVacuna2)
-            // pickDateBtn.setText (diaObtenido.toString()+"/"+mesObtenido.toString()+"/"+añoObtenido.toString())
         }
         dateVacuna3.setOnClickListener{
+            it.setBackgroundColor(0xFF4CAF50.toInt())
             showDatePickerDialog(dateVacuna3)
-            // pickDateBtn.setText (diaObtenido.toString()+"/"+mesObtenido.toString()+"/"+añoObtenido.toString())
         }
         dateVacuna4.setOnClickListener{
+            it.setBackgroundColor(0xFF4CAF50.toInt())
             showDatePickerDialog(dateVacuna4)
-            // pickDateBtn.setText (diaObtenido.toString()+"/"+mesObtenido.toString()+"/"+añoObtenido.toString())
         }
         dateVacuna5.setOnClickListener{
+            it.setBackgroundColor(0xFF4CAF50.toInt())
             showDatePickerDialog(dateVacuna5)
-            // pickDateBtn.setText (diaObtenido.toString()+"/"+mesObtenido.toString()+"/"+añoObtenido.toString())
         }
     }
 
@@ -70,7 +85,19 @@ class RegistroVacunasActivity : AppCompatActivity() {
         mesObtenido = month
         añoObtenido = year
 
-        parent.setText(diaObtenido.toString()+"/"+(mesObtenido+1).toString()+"/"+añoObtenido.toString())
+             if(parent == dateVacuna1 &&  tipoMascotaP == "Perro") {dateVacuna1.setText("Moquillo")}
+        else if(parent == dateVacuna2 &&  tipoMascotaP == "Perro") {dateVacuna2.setText("Hepatitis")}
+        else if(parent == dateVacuna3 &&  tipoMascotaP == "Perro") {dateVacuna3.setText("Parvovirosis")}
+        else if(parent == dateVacuna4 &&  tipoMascotaP == "Perro") {dateVacuna4.setText("Leptospirosis")}
+        else if(parent == dateVacuna5 &&  tipoMascotaP == "Perro") {dateVacuna5.setText("Rabia")}
+        else if(parent == dateVacuna1 &&  tipoMascotaP == "Gato" ) {dateVacuna1.setText("Leucemia")}
+        else if(parent == dateVacuna2 &&  tipoMascotaP == "Gato" ) {dateVacuna2.setText("Rinotraqueitis")}
+        else if(parent == dateVacuna3 &&  tipoMascotaP == "Gato" ) {dateVacuna3.setText("Panleucopenia")}
+        else if(parent == dateVacuna4 &&  tipoMascotaP == "Gato" ) {dateVacuna4.setText("Calcivirosis")}
+        else if(parent == dateVacuna5 &&  tipoMascotaP == "Gato" ) {dateVacuna5.setText("Rabia")}
+        else if(parent == dateCumpleaños){dateCumpleaños.setText("")}
+
+        parent.setText(parent.text.toString() + "\n" + diaObtenido.toString()+"/"+(mesObtenido+1).toString()+"/"+añoObtenido.toString())
 
         if(parent==dateCumpleaños){
             var sdf = formatedDate
@@ -90,6 +117,8 @@ class RegistroVacunasActivity : AppCompatActivity() {
 
     }
 
-
+    override fun onBackPressed() {
+        //super.onBackPressed()
+    }
 
 }
