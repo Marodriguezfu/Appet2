@@ -11,9 +11,14 @@
         android:title="Galeria"
         app:showAsAction="ifRoom"/>
     <item
-        android:title="More"
-        android:id="@+id/more_btn"
+        android:title="Settings"
+        android:id="@+id/settings_btn"
+        android:icon="@drawable/settings_icon"
         app:showAsAction="never">
     </item>
+    <item
+        android:title="Log Out"
+        android:id="@+id/log_out_opt"
+        app:showAsAction="never"/>
 
 </menu>
